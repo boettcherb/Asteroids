@@ -1,14 +1,19 @@
 package display;
 
-import java.awt.Canvas;
+import game_info.Info;
 
-public class GUI extends Canvas implements Runnable {
+import java.awt.Canvas;
+import java.awt.Graphics;
+import java.awt.image.BufferStrategy;
+
+public class GUI extends Canvas implements Runnable, Info {
     private boolean running;
     private Thread thread;
 
     public GUI() {
         new Frame(this);
         thread = new Thread(this);
+        createBufferStrategy(3);
     }
 
     public void start() {
@@ -31,9 +36,33 @@ public class GUI extends Canvas implements Runnable {
     }
 
     public void run() {
+        long lastTime = System.nanoTime();
+        double maxFramesPerSecond = 60.0;
+        double ns = 1e9 / maxFramesPerSecond;
+        double delta = 0;
         while (running) {
-
+            long now = System.nanoTime();
+            delta += (now - lastTime) / ns;
+            lastTime = now;
+            while (delta >= 1) {
+                tick();
+                --delta;
+            }
+            render();
         }
+    }
+
+    public void tick() {
+
+    }
+
+    public void render() {
+        BufferStrategy bs = this.getBufferStrategy();
+        Graphics g = bs.getDrawGraphics();
+        g.setColor(BACKGROUND_COLOR);
+        g.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+        g.dispose();
+        bs.show();
     }
 
     public static void main(String[] args) {
