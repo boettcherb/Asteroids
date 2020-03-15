@@ -2,8 +2,8 @@ package display;
 
 import game_info.Info;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JFrame;
+import java.awt.Dimension;
 
 
 public class Frame implements Info {
