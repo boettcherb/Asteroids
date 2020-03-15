@@ -11,8 +11,8 @@ public class Frame implements Info {
 
     public Frame(GUI gui) {
         frame = new JFrame(GAME_TITLE);
-        int frameWidth = WIDTH + frame.getInsets().left + frame.getInsets().right;
-        int frameHeight = HEIGHT + frame.getInsets().top + frame.getInsets().bottom;
+        int frameWidth = CANVAS_WIDTH + frame.getInsets().left + frame.getInsets().right;
+        int frameHeight = CANVAS_HEIGHT + frame.getInsets().top + frame.getInsets().bottom;
         setDimensions(new Dimension(frameWidth, frameHeight));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
