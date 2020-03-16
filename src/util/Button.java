@@ -18,6 +18,9 @@ public class Button implements Info {
     }
 
     public void draw(Graphics g) {
+        g.setColor(BACKGROUND_COLOR);
+        g.fillRect(X, Y, BUTTON_WIDTH, BUTTON_HEIGHT);
+        g.setColor(FOREGROUND_COlOR);
         g.drawRect(X, Y, BUTTON_WIDTH, BUTTON_HEIGHT);
         drawCenteredString(g, buttonText, getRectangle(), BUTTON_FONT);
     }

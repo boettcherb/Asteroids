@@ -27,7 +27,7 @@ public interface Info {
     float PLAY_BUTTON_HEIGHT = 0.40f;
     float HELP_BUTTON_HEIGHT = 0.57f;
     float QUIT_BUTTON_HEIGHT = 0.74f;
-    String PLAY_BUTTON_TEXT = "PlAY";
+    String PLAY_BUTTON_TEXT = "PLAY";
     String HELP_BUTTON_TEXT = "HELP";
     String QUIT_BUTTON_TEXT = "QUIT";
 }
