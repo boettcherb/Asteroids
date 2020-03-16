@@ -2,7 +2,10 @@ package util;
 
 import game_info.Info;
 
-import java.awt.*;
+import java.awt.Graphics;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Rectangle;
 
 public class Button implements Info {
     private final String buttonText;
