@@ -23,4 +23,11 @@ public interface Info {
 
     Font TITLE_FONT = new Font("arial", Font.ITALIC, 135);
     Rectangle TITLE_RECT = new Rectangle(0, 0, CANVAS_WIDTH, (int) (CANVAS_HEIGHT * 0.4));
+
+    float PLAY_BUTTON_HEIGHT = 0.40f;
+    float HELP_BUTTON_HEIGHT = 0.57f;
+    float QUIT_BUTTON_HEIGHT = 0.74f;
+    String PLAY_BUTTON_TEXT = "PlAY";
+    String HELP_BUTTON_TEXT = "HELP";
+    String QUIT_BUTTON_TEXT = "QUIT";
 }
