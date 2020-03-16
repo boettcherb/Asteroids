@@ -9,10 +9,12 @@ import java.awt.image.BufferStrategy;
 public class GUI extends Canvas implements Runnable, Info {
     private boolean running;
     private Thread thread;
+    private Menu menu;
 
     public GUI() {
         new Frame(this);
         thread = new Thread(this);
+        menu = new Menu();
         createBufferStrategy(3);
     }
 
@@ -53,7 +55,7 @@ public class GUI extends Canvas implements Runnable, Info {
     }
 
     public void tick() {
-
+        menu.tick();
     }
 
     public void render() {
@@ -61,6 +63,7 @@ public class GUI extends Canvas implements Runnable, Info {
         Graphics g = bs.getDrawGraphics();
         g.setColor(BACKGROUND_COLOR);
         g.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+        menu.render(g);
         g.dispose();
         bs.show();
     }

@@ -9,4 +9,7 @@ public interface Info {
     Color BACKGROUND_COLOR = Color.BLACK;
     Color FOREGROUND_COlOR = Color.WHITE;
     Color MENU_PARTICLE_COLOR = Color.GRAY;
+    int NUM_PARTICLES = 1000;
+    int PARTICLE_SPEED = 3;
+    int MAX_PARTICLE_SIZE = 8;
 }
