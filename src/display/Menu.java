@@ -4,13 +4,24 @@ import game_info.Info;
 import util.Button;
 
 import java.awt.Graphics;
+import java.awt.Point;
 import java.util.Random;
 
 public class Menu implements Info {
+    private GUI gui;
+    private MenuState menuState;
     private final Particle[] particles;
-    private Button play, help, quit;
+    private final Button play, help, quit, back;
 
-    public Menu() {
+
+    private enum MenuState {
+        Start,
+        Help,
+    }
+
+    public Menu(GUI gui) {
+        this.gui = gui;
+        menuState = MenuState.Start;
         particles = new Particle[NUM_PARTICLES];
         for (int i = 0; i < particles.length; ++i) {
             particles[i] = new Particle();
@@ -18,6 +29,23 @@ public class Menu implements Info {
         play = new Button(PLAY_BUTTON_TEXT, PLAY_BUTTON_HEIGHT);
         help = new Button(HELP_BUTTON_TEXT, HELP_BUTTON_HEIGHT);
         quit = new Button(QUIT_BUTTON_TEXT, QUIT_BUTTON_HEIGHT);
+        back = new Button(BACK_BUTTON_TEXT, BACK_BUTTON_HEIGHT);
+    }
+
+    public void click(Point point) {
+        if (menuState == MenuState.Start) {
+            if (play.getRectangle().contains(point)) {
+                gui.setPlaying(true);
+            } else if (help.getRectangle().contains(point)) {
+                menuState = MenuState.Help;
+            } else if (quit.getRectangle().contains(point)) {
+                gui.stop();
+            }
+        } else if (menuState == MenuState.Help) {
+            if (back.getRectangle().contains(point)) {
+                menuState = MenuState.Start;
+            }
+        }
     }
 
     public void tick() {
@@ -32,10 +60,23 @@ public class Menu implements Info {
             p.draw(g);
         }
         g.setColor(FOREGROUND_COlOR);
+        if (menuState == MenuState.Start) {
+            renderStart(g);
+        } else {
+            renderHelp(g);
+        }
+
+    }
+
+    private void renderStart(Graphics g) {
         Button.drawCenteredString(g, GAME_TITLE, TITLE_RECT, TITLE_FONT);
         play.draw(g);
         help.draw(g);
         quit.draw(g);
+    }
+
+    private void renderHelp(Graphics g) {
+        back.draw(g);
     }
 
     private static class Particle {
