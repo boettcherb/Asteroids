@@ -1,6 +1,7 @@
 package display;
 
 import game_info.Info;
+import user_input.*;
 
 import java.awt.Canvas;
 import java.awt.Graphics;
@@ -8,13 +9,15 @@ import java.awt.image.BufferStrategy;
 
 public class GUI extends Canvas implements Runnable, Info {
     private boolean running;
+    private boolean playing;
     private Thread thread;
     private Menu menu;
 
     public GUI() {
         new Frame(this);
         thread = new Thread(this);
-        menu = new Menu();
+        menu = new Menu(this);
+        addMouseListener(new MouseInput(menu));
         createBufferStrategy(3);
     }
 
@@ -28,8 +31,8 @@ public class GUI extends Canvas implements Runnable, Info {
     public void stop() {
         if (running) {
             try {
-                thread.join();
                 running = false;
+                thread.join();
             } catch(Exception e) {
                 e.printStackTrace();
             }
@@ -66,6 +69,10 @@ public class GUI extends Canvas implements Runnable, Info {
         menu.render(g);
         g.dispose();
         bs.show();
+    }
+
+    public void setPlaying(boolean play) {
+        playing = play;
     }
 
     public static void main(String[] args) {
