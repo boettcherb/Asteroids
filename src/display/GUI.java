@@ -12,11 +12,13 @@ public class GUI extends Canvas implements Runnable, Info {
     private boolean playing;
     private Thread thread;
     private Menu menu;
+    private Handler handler;
 
     public GUI() {
         new Frame(this);
         thread = new Thread(this);
         menu = new Menu(this);
+        handler = new Handler();
         addMouseListener(new MouseInput(menu));
         createBufferStrategy(3);
     }
