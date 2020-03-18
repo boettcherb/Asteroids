@@ -3,6 +3,7 @@ package game_info;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Rectangle;
+import java.awt.Point;
 
 public interface Info {
     String GAME_TITLE = "ASTEROIDS";
@@ -32,4 +33,9 @@ public interface Info {
     String HELP_BUTTON_TEXT = "HELP";
     String QUIT_BUTTON_TEXT = "QUIT";
     String BACK_BUTTON_TEXT = "BACK";
+
+    Point[] PLAYER_POINTS = {new Point(0, -33), new Point(15, 20), new Point(0, 10), new Point(-15, 20)};
+    float PLAYER_ACCELERATION = 0.2f;
+    float PLAYER_DECELERATION = 0.1f;
+    float PLAYER_TURN_RATE = 0.1f;
 }
