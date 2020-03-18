@@ -1,9 +1,10 @@
 package game_info;
 
+import util.Point;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Rectangle;
-import java.awt.Point;
 
 public interface Info {
     String GAME_TITLE = "ASTEROIDS";
