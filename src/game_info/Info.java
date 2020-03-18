@@ -10,6 +10,12 @@ public interface Info {
     String GAME_TITLE = "ASTEROIDS";
     int CANVAS_WIDTH = 1000;
     int CANVAS_HEIGHT = 700;
+    int MIN_X = -75;
+    int MAX_X = CANVAS_WIDTH + 75;
+    int MIN_Y = -75;
+    int MAX_Y = CANVAS_HEIGHT + 75;
+    int SHIFT_X = MAX_X + 75;
+    int SHIFT_Y = MAX_Y + 75;
 
     Color BACKGROUND_COLOR = Color.BLACK;
     Color FOREGROUND_COlOR = Color.WHITE;
@@ -35,9 +41,9 @@ public interface Info {
     String QUIT_BUTTON_TEXT = "QUIT";
     String BACK_BUTTON_TEXT = "BACK";
 
-    Point[] PLAYER_POINTS = {new Point(0, -33), new Point(15, 20), new Point(0, 10), new Point(-15, 20)};
+    Point[] PLAYER_POINTS = { new Point(0, -33), new Point(15, 20), new Point(0, 10), new Point(-15, 20) };
     float PLAYER_ACCELERATION = 0.2f;
-    float PLAYER_DECELERATION = 0.98f;
+    float PLAYER_DECELERATION = 0.984f;
     float EPSILON = 0.1f;
     float PLAYER_TURN_RATE = 0.1f;
 }

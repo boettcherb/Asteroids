@@ -1,10 +1,11 @@
 package shape;
 
 import util.Point;
+import game_info.Info;
 
 import java.awt.Graphics;
 
-public abstract class Shape {
+public abstract class Shape implements Info {
     private Point[] points;
     private float X, Y;
     private float velX, velY;
@@ -21,8 +22,28 @@ public abstract class Shape {
     public void translate(float x, float y) {
         X += x;
         Y += y;
+        translatePoints(x, y);
+        if (X > MAX_X) {
+            X -= SHIFT_X;
+            translatePoints(-SHIFT_X, 0);
+        }
+        if (X < MIN_X) {
+            X += SHIFT_X;
+            translatePoints(SHIFT_X, 0);
+        }
+        if (Y > MAX_Y) {
+            Y -= SHIFT_Y;
+            translatePoints(0, -SHIFT_Y);
+        }
+        if (Y < MIN_Y) {
+            Y += SHIFT_Y;
+            translatePoints(0, SHIFT_Y);
+        }
+    }
+
+    private void translatePoints(float dx, float dy) {
         for (Point point : points) {
-            point.translate(x, y);
+            point.translate(dx, dy);
         }
     }
 
