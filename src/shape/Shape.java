@@ -1,26 +1,27 @@
 package shape;
 
+import util.Point;
+
 import java.awt.Graphics;
-import java.awt.Point;
 
 public abstract class Shape {
     private Point[] points;
-    private int X, Y;
+    private float X, Y;
 
     public Shape(Point[] points, int x, int y) {
-        this.points = new Point[points.length];
+        this.points = new Point[points.length + 1];
         for (int i = 0; i < points.length; ++i) {
-            this.points[i] = new Point(points[i].x, points[i].y);
+            this.points[i] = new Point(points[i].getX(), points[i].getY());
         }
+        this.points[points.length] = new Point(points[0].getX(), points[0].getY());
         translate(x, y);
     }
 
-    private void translate(int x, int y) {
+    private void translate(float x, float y) {
         X += x;
         Y += y;
         for (Point point : points) {
-            point.x += x;
-            point.y += y;
+            point.translate(x, y);
         }
     }
 
@@ -28,10 +29,11 @@ public abstract class Shape {
 
     public void render(Graphics g) {
         for (int i = 0; i < points.length - 1; ++i) {
-            g.drawLine(points[i].x, points[i].y, points[i + 1].x, points[i + 1].y);
+            int x1 = (int) points[i].getX();
+            int x2 = (int) points[i].getY();
+            int y1 = (int) points[i + 1].getX();
+            int y2 = (int) points[i + 1].getY();
+            g.drawLine(x1, y1, x2, y2);
         }
-        int last = points.length - 1;
-        g.drawLine(points[0].x, points[0].y, points[last].x, points[last].y);
     }
-
 }
