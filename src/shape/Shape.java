@@ -30,8 +30,8 @@ public abstract class Shape {
     public void render(Graphics g) {
         for (int i = 0; i < points.length - 1; ++i) {
             int x1 = (int) points[i].getX();
-            int x2 = (int) points[i].getY();
-            int y1 = (int) points[i + 1].getX();
+            int y1 = (int) points[i].getY();
+            int x2 = (int) points[i + 1].getX();
             int y2 = (int) points[i + 1].getY();
             g.drawLine(x1, y1, x2, y2);
         }
