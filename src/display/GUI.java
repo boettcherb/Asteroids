@@ -60,7 +60,12 @@ public class GUI extends Canvas implements Runnable, Info {
     }
 
     public void tick() {
-        menu.tick();
+        if (playing) {
+            handler.tick();
+        } else {
+            menu.tick();
+        }
+
     }
 
     public void render() {
@@ -68,7 +73,12 @@ public class GUI extends Canvas implements Runnable, Info {
         Graphics g = bs.getDrawGraphics();
         g.setColor(BACKGROUND_COLOR);
         g.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-        menu.render(g);
+        g.setColor(FOREGROUND_COlOR);
+        if (playing) {
+            handler.render(g);
+        } else {
+            menu.render(g);
+        }
         g.dispose();
         bs.show();
     }
