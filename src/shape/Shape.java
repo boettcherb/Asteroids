@@ -38,6 +38,37 @@ public abstract class Shape {
         }
     }
 
+    void rotate(float d_theta) {
+        Point center = new Point(X, Y);
+        for (Point point : points) {
+            float dx = point.getX() - X; // x-dist from center
+            float dy = point.getY() - Y; // y-dist from center
+            if (dx == 0) {
+                dx += 1e-6; // prevent divide by zero
+            }
+            double theta;
+            if (dy >= 0) {
+                if (dx > 0) { // first quadrant
+                    theta = Math.atan(dy / dx);
+                } else { // second quadrant
+                    theta = Math.PI - Math.atan(dy / -dx);
+                }
+            } else {
+                if (dx < 0) { // third quadrant
+                    theta = Math.PI + Math.atan(-dy / -dx);
+                } else { // fourth quadrant
+                    theta = -Math.atan(-dy / dx);
+                }
+            }
+            theta += d_theta;
+            float radius = point.distTo(center);
+            point.translate(-dx, -dy);
+            float x = radius * (float) Math.cos(theta);
+            float y = radius * (float) Math.sin(theta);
+            point.translate(x, y);
+        }
+    }
+
     public float getVelX() {
         return velX;
     }

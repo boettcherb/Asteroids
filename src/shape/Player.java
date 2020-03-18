@@ -15,6 +15,14 @@ public class Player extends Shape implements Info {
             setVelX(getVelX() + (float) Math.sin(theta) * PLAYER_ACCELERATION);
             setVelY(getVelY() - (float) Math.cos(theta) * PLAYER_ACCELERATION);
         }
+        if (turnRight) {
+            theta += PLAYER_TURN_RATE;
+            rotate(PLAYER_TURN_RATE);
+        }
+        if (turnLeft) {
+            theta -= PLAYER_TURN_RATE;
+            rotate(-PLAYER_TURN_RATE);
+        }
         translate(getVelX(), getVelY());
     }
 

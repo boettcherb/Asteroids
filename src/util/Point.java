@@ -13,6 +13,12 @@ public class Point {
         Y += y;
     }
 
+    public float distTo(Point other) {
+        float Xdist = X - other.getX();
+        float Ydist = Y - other.getY();
+        return (float) Math.sqrt(Xdist * Xdist + Ydist * Ydist);
+    }
+
     public float getX() {
         return X;
     }
