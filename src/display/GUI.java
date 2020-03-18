@@ -20,6 +20,7 @@ public class GUI extends Canvas implements Runnable, Info {
         menu = new Menu(this);
         handler = new Handler();
         addMouseListener(new MouseInput(menu));
+        addKeyListener(new KeyInput(this, handler));
         createBufferStrategy(3);
     }
 
@@ -81,6 +82,10 @@ public class GUI extends Canvas implements Runnable, Info {
         }
         g.dispose();
         bs.show();
+    }
+
+    public boolean isPlaying() {
+        return playing;
     }
 
     public void setPlaying(boolean play) {

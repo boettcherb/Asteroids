@@ -27,6 +27,15 @@ public class Handler implements Info {
         }
     }
 
+    public Player getPlayer() {
+        for (Shape shape : shapes) {
+            if (shape instanceof Player) {
+                return (Player) shape;
+            }
+        }
+        return null;
+    }
+
     public void clearAll() {
         shapes.clear();
     }
