@@ -14,6 +14,9 @@ public class Player extends Shape implements Info {
         if (accelerate) {
             setVelX(getVelX() + (float) Math.sin(theta) * PLAYER_ACCELERATION);
             setVelY(getVelY() - (float) Math.cos(theta) * PLAYER_ACCELERATION);
+        } else {
+            setVelX(Math.abs(getVelX()) < EPSILON ? 0 : getVelX() * PLAYER_DECELERATION);
+            setVelY(Math.abs(getVelY()) < EPSILON ? 0 : getVelY() * PLAYER_DECELERATION);
         }
         if (turnRight) {
             theta += PLAYER_TURN_RATE;

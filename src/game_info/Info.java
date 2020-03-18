@@ -37,6 +37,7 @@ public interface Info {
 
     Point[] PLAYER_POINTS = {new Point(0, -33), new Point(15, 20), new Point(0, 10), new Point(-15, 20)};
     float PLAYER_ACCELERATION = 0.2f;
-    float PLAYER_DECELERATION = 0.1f;
+    float PLAYER_DECELERATION = 0.98f;
+    float EPSILON = 0.1f;
     float PLAYER_TURN_RATE = 0.1f;
 }
