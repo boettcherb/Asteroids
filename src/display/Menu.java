@@ -13,10 +13,10 @@ public class Menu implements Info {
     private final Particle[] particles;
     private final Button play, help, quit, back;
 
-
     private enum MenuState {
         Start,
         Help,
+        None
     }
 
     public Menu(GUI gui) {
@@ -36,6 +36,7 @@ public class Menu implements Info {
         if (menuState == MenuState.Start) {
             if (play.getRectangle().contains(point)) {
                 gui.setPlaying(true);
+                menuState = MenuState.None;
             } else if (help.getRectangle().contains(point)) {
                 menuState = MenuState.Help;
             } else if (quit.getRectangle().contains(point)) {
