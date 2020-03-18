@@ -11,7 +11,11 @@ public class Player extends Shape implements Info {
     }
 
     public void tick() {
-
+        if (accelerate) {
+            setVelX(getVelX() + (float) Math.sin(theta) * PLAYER_ACCELERATION);
+            setVelY(getVelY() - (float) Math.cos(theta) * PLAYER_ACCELERATION);
+        }
+        translate(getVelX(), getVelY());
     }
 
     public void setAccelerate(boolean accelerate) {

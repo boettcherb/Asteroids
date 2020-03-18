@@ -7,6 +7,7 @@ import java.awt.Graphics;
 public abstract class Shape {
     private Point[] points;
     private float X, Y;
+    private float velX, velY;
 
     public Shape(Point[] points, int x, int y) {
         this.points = new Point[points.length + 1];
@@ -17,7 +18,7 @@ public abstract class Shape {
         translate(x, y);
     }
 
-    private void translate(float x, float y) {
+    public void translate(float x, float y) {
         X += x;
         Y += y;
         for (Point point : points) {
@@ -35,5 +36,21 @@ public abstract class Shape {
             int y2 = (int) points[i + 1].getY();
             g.drawLine(x1, y1, x2, y2);
         }
+    }
+
+    public float getVelX() {
+        return velX;
+    }
+
+    public float getVelY() {
+        return velY;
+    }
+
+    public void setVelX(float val) {
+        velX = val;
+    }
+
+    public void setVelY(float val) {
+        velY = val;
     }
 }
