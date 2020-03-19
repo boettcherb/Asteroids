@@ -15,19 +15,23 @@ public class Handler implements Info {
         shapes.add(new Player(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2));
     }
 
-    public void tick() {
+    public synchronized void tick() {
         for (Shape shape : shapes) {
             shape.tick();
         }
     }
 
-    public void render(Graphics g) {
+    public synchronized void render(Graphics g) {
         for (Shape shape : shapes) {
             shape.render(g);
         }
     }
 
-    public Player getPlayer() {
+    public synchronized void addShape(Shape shape) {
+        shapes.add(shape);
+    }
+
+    public synchronized Player getPlayer() {
         for (Shape shape : shapes) {
             if (shape instanceof Player) {
                 return (Player) shape;

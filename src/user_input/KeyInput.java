@@ -29,6 +29,9 @@ public class KeyInput implements KeyListener {
             if (key == KeyEvent.VK_LEFT) {
                 player.setTurnLeft(true);
             }
+            if (key == KeyEvent.VK_SPACE) {
+                handler.addShape(player.shoot());
+            }
         }
     }
 

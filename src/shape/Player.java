@@ -29,6 +29,10 @@ public class Player extends Shape implements Info {
         translate(getVelX(), getVelY());
     }
 
+    public Bullet shoot() {
+        return new Bullet(getX(), getY(), theta);
+    }
+
     public void setAccelerate(boolean accelerate) {
         this.accelerate = accelerate;
     }
