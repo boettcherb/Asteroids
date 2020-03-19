@@ -1,43 +1,52 @@
 package display;
 
 import game_info.Info;
-import shape.Shape;
-import shape.Player;
+import shape.*;
 
 import java.awt.Graphics;
-import java.util.LinkedList;
+import java.util.ListIterator;
+import java.util.ArrayList;
 
 public class Handler implements Info {
-    private LinkedList<Shape> shapes;
+    private ArrayList<Shape> shapes;
+    private Player player;
 
     public Handler() {
-        shapes = new LinkedList<>();
-        shapes.add(new Player(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2));
+        shapes = new ArrayList<>();
+        player = new Player(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
     }
 
-    public synchronized void tick() {
-        for (Shape shape : shapes) {
-            shape.tick();
+    public void tick() {
+        player.tick();
+        for (int i = 0; i < shapes.size(); ++i) {
+            shapes.get(i).tick();
+        }
+        checkBulletLives();
+    }
+
+    private void checkBulletLives() {
+        ListIterator<Shape> itr = shapes.listIterator();
+        while (itr.hasNext()) {
+            Shape shape = itr.next();
+            if (shape instanceof Bullet && ((Bullet) shape).dead()) {
+                itr.remove();
+            }
         }
     }
 
-    public synchronized void render(Graphics g) {
-        for (Shape shape : shapes) {
-            shape.render(g);
+    public void render(Graphics g) {
+        player.render(g);
+        for (int i = 0; i < shapes.size(); ++i) {
+            shapes.get(i).render(g);
         }
     }
 
-    public synchronized void addShape(Shape shape) {
+    public void addShape(Shape shape) {
         shapes.add(shape);
     }
 
-    public synchronized Player getPlayer() {
-        for (Shape shape : shapes) {
-            if (shape instanceof Player) {
-                return (Player) shape;
-            }
-        }
-        return null;
+    public Player getPlayer() {
+        return player;
     }
 
     public void clearAll() {
