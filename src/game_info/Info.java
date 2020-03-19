@@ -46,4 +46,29 @@ public interface Info {
     float PLAYER_DECELERATION = 0.984f;
     float EPSILON = 0.1f;
     float PLAYER_TURN_RATE = 0.1f;
+
+    Point[][] ASTEROID_POINTS = {
+        {
+            new Point(-37, -74), new Point(21, -74), new Point(75, -42), new Point(75, -20),
+            new Point(27, -4), new Point(75, 27), new Point(43, 75), new Point(16, 42),
+            new Point(-21, 75), new Point(-74, 11), new Point(-74, -42), new Point(-15, -42)
+        },
+        {
+            new Point(-75, -40), new Point(-40, -75), new Point(-3, -42), new Point(37, -75),
+            new Point(75, -45), new Point(51, -5), new Point(73, 37), new Point(17, 75),
+            new Point(-46, 75), new Point(-75, 47)
+        },
+        {
+            new Point(-74, -18), new Point(-18, -74), new Point(48, -74), new Point(75, -21),
+            new Point(75, 5), new Point(19, 75), new Point(-18, 75), new Point(-7, 5),
+            new Point(-45, 74), new Point(-74, 15), new Point(-37, -3)
+        },
+        {
+            new Point(-74, -37), new Point(-29, -74), new Point(-2, -55), new Point(37, -74),
+            new Point(75, -37), new Point(31, -18), new Point(75, 19), new Point(29, 75),
+            new Point(-20, 54), new Point(-36, 75), new Point(-74, 36), new Point(-52, 0)
+        }
+    };
+
+    float LARGE_ASTEROID_SPEED = 0.5f;
 }
