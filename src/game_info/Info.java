@@ -75,4 +75,6 @@ public interface Info {
     Point[] BULLET_POINTS = { new Point(-1, -1), new Point(-1, 1), new Point(1, 1), new Point(1, -1) };
     int BULLET_SPEED = 13;
     int BULLET_LIFE = 60;
+
+    int PLAYER_LIFE = 200;
 }

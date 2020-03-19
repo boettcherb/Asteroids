@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public class Handler implements Info {
     private ArrayList<Shape> shapes;
     private Player player;
+    private int playerDeathTimer;
 
     public Handler() {
         shapes = new ArrayList<>();
@@ -17,7 +18,14 @@ public class Handler implements Info {
     }
 
     public void tick() {
-        player.tick();
+        if (player == null) {
+            if (playerDeathTimer-- < 0) {
+                player = new Player(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
+            }
+        } else {
+            player.tick();
+        }
+
         for (int i = 0; i < shapes.size(); ++i) {
             shapes.get(i).tick();
         }
@@ -35,7 +43,9 @@ public class Handler implements Info {
     }
 
     public void render(Graphics g) {
-        player.render(g);
+        if (player != null) {
+            player.render(g);
+        }
         for (int i = 0; i < shapes.size(); ++i) {
             shapes.get(i).render(g);
         }
@@ -43,6 +53,11 @@ public class Handler implements Info {
 
     public void addShape(Shape shape) {
         shapes.add(shape);
+    }
+
+    public void destroyPlayer() {
+        player = null;
+        playerDeathTimer = PLAYER_LIFE;
     }
 
     public Player getPlayer() {
