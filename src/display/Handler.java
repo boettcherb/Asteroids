@@ -6,6 +6,7 @@ import util.Line;
 
 import java.awt.Graphics;
 import java.util.LinkedList;
+import java.util.Random;
 
 public class Handler implements Info {
     private LinkedList<Shape> shapes;
@@ -17,8 +18,10 @@ public class Handler implements Info {
         shapes = new LinkedList<>();
         added = new LinkedList<>();
         removed = new LinkedList<>();
-        addShape(new Asteroid(100, 300, Asteroid.AsteroidType.Large));
-        addShape(new Asteroid(100, 300, Asteroid.AsteroidType.Small));
+        Random rand = new Random();
+        for (int i = 0; i < 4; ++i) {
+            addShape(new Asteroid(rand.nextInt(CANVAS_WIDTH), rand.nextInt(CANVAS_HEIGHT), Asteroid.AsteroidType.Large));
+        }
         player = new Player(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
     }
 
