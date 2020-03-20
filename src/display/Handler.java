@@ -5,17 +5,20 @@ import shape.*;
 import util.Line;
 
 import java.awt.Graphics;
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class Handler implements Info {
-    private ArrayList<Shape> shapes;
+    private LinkedList<Shape> shapes;
+    private LinkedList<Shape> added, removed;
     private Player player;
     private int playerDeathTimer;
 
     public Handler() {
-        shapes = new ArrayList<>();
-        shapes.add(new Asteroid(100, 300, Asteroid.AsteroidType.Large));
-        shapes.add(new Asteroid(100, 300, Asteroid.AsteroidType.Small));
+        shapes = new LinkedList<>();
+        added = new LinkedList<>();
+        removed = new LinkedList<>();
+        addShape(new Asteroid(100, 300, Asteroid.AsteroidType.Large));
+        addShape(new Asteroid(100, 300, Asteroid.AsteroidType.Small));
         player = new Player(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
     }
 
@@ -26,66 +29,70 @@ public class Handler implements Info {
             }
         } else {
             player.tick();
+            checkPlayerCollisions();
         }
-        for (int i = 0; i < shapes.size(); ++i) {
-            shapes.get(i).tick();
-        }
-        checkPlayerCollisions();
+        shapes.forEach(shape -> shape.tick());
         checkBulletLives();
         checkBulletCollisions();
+        resetLists();
     }
 
     private void checkPlayerCollisions() {
-        for (int i = 0; i < shapes.size() && player != null; ++i) {
-            if (shapes.get(i) instanceof Asteroid && player.intersects(shapes.get(i))) {
+        for (Shape shape : shapes) {
+            if (shape instanceof Asteroid && player.intersects(shape)) {
                 destroyPlayer();
-                removeShape(shapes.get(i));
+                removeShape(shape);
+                break;
             }
         }
     }
 
     private void checkBulletLives() {
-        for (int i = 0; i < shapes.size(); ++i) {
-            if (shapes.get(i) instanceof Bullet && ((Bullet) shapes.get(i)).dead()) {
-                removeShape(shapes.get(i));
+        for (Shape shape : shapes) {
+            if (shape instanceof Bullet && ((Bullet) shape).dead()) {
+                removeShape(shape);
             }
         }
     }
 
     private void checkBulletCollisions() {
-        for (int i = 0; i < shapes.size(); ++i) {
-            if (shapes.get(i) instanceof Bullet) {
-                Bullet bullet = (Bullet) shapes.get(i);
-                for (int j = 0; j < shapes.size(); ++j) {
-                    if (shapes.get(j) instanceof Asteroid) {
-                        Asteroid asteroid = (Asteroid) shapes.get(j);
-                        Line path = bullet.getPath();
-                        if (asteroid.intersects(bullet) || asteroid.intersects(path)) {
-                            removeShape(bullet);
-                            removeShape(asteroid);
-                            break;
-                        }
-                    }
+        for (Shape shapeI : shapes) if (shapeI instanceof Bullet) {
+            Bullet bullet = (Bullet) shapeI;
+            for (Shape shapeJ : shapes) if (shapeJ instanceof Asteroid) {
+                Asteroid asteroid = (Asteroid) shapeJ;
+                Line path = bullet.getPath();
+                if (asteroid.intersects(bullet) || asteroid.intersects(path)) {
+                    removeShape(bullet);
+                    removeShape(asteroid);
                 }
             }
         }
+    }
+
+    private void resetLists() {
+        for (Shape shape : shapes) {
+            if (!removed.contains(shape)) {
+                added.add(shape);
+            }
+        }
+        shapes = added;
+        added = new LinkedList<>();
+        removed.clear();
     }
 
     public void render(Graphics g) {
         if (player != null) {
             player.render(g);
         }
-        for (int i = 0; i < shapes.size(); ++i) {
-            shapes.get(i).render(g);
-        }
+        shapes.forEach(shape -> shape.render(g));
     }
 
     public void addShape(Shape shape) {
-        shapes.add(shape);
+        added.add(shape);
     }
 
     public void removeShape(Shape shape) {
-        shapes.remove(shape);
+        removed.add(shape);
         if (shape instanceof Asteroid) {
             Asteroid asteroid = (Asteroid) shape;
             if (asteroid.getType() == Asteroid.AsteroidType.Large) {
@@ -98,7 +105,7 @@ public class Handler implements Info {
         }
     }
 
-    public void destroyPlayer() {
+    private void destroyPlayer() {
         player = null;
         playerDeathTimer = PLAYER_LIFE;
     }
@@ -109,5 +116,7 @@ public class Handler implements Info {
 
     public void clearAll() {
         shapes.clear();
+        added.clear();
+        removed.clear();
     }
 }
