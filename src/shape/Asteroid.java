@@ -5,6 +5,7 @@ import game_info.Info;
 import java.util.Random;
 
 public class Asteroid extends Shape implements Info {
+    private AsteroidType type;
 
     public enum AsteroidType {
         Large,
@@ -12,8 +13,9 @@ public class Asteroid extends Shape implements Info {
         Small
     }
 
-    public Asteroid(int x, int y, AsteroidType type) {
+    public Asteroid(float x, float y, AsteroidType type) {
         super(ASTEROID_POINTS[new Random().nextInt(4)], x, y);
+        this.type = type;
         float theta = (new Random()).nextFloat() * (float) Math.PI * 2;
         float speed;
         if (type == AsteroidType.Large) {
@@ -31,5 +33,9 @@ public class Asteroid extends Shape implements Info {
 
     public void tick() {
         translate(getVelX(), getVelY());
+    }
+
+    public AsteroidType getType() {
+        return type;
     }
 }

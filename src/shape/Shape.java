@@ -104,6 +104,15 @@ public abstract class Shape implements Info {
         return false;
     }
 
+    public boolean intersects(Line line) {
+        for (int i = 0; i < points.length - 1; ++i) {
+            if (line.intersects(new Line(points[i], points[i + 1]))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void scale(float scaleValue) {
         for (Point point : points) {
             point.translate(-X, -Y);
