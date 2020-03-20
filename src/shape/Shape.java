@@ -104,6 +104,14 @@ public abstract class Shape implements Info {
         return false;
     }
 
+    public void scale(float scaleValue) {
+        for (Point point : points) {
+            point.translate(-X, -Y);
+            point.scale(scaleValue);
+            point.translate(X, Y);
+        }
+    }
+
     public float getX() {
         return X;
     }

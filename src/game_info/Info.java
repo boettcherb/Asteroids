@@ -71,6 +71,8 @@ public interface Info {
     };
 
     float LARGE_ASTEROID_SPEED = 0.5f;
+    float MEDIUM_ASTEROID_SPEED = 0.7f;
+    float SMALL_ASTEROID_SPEED = 0.9f;
 
     Point[] BULLET_POINTS = { new Point(-1, -1), new Point(-1, 1), new Point(1, 1), new Point(1, -1) };
     int BULLET_SPEED = 13;

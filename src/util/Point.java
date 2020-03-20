@@ -13,6 +13,11 @@ public class Point {
         Y += y;
     }
 
+    public void scale(float scaleValue) {
+        X *= scaleValue;
+        Y *= scaleValue;
+    }
+
     public float distTo(Point other) {
         float Xdist = X - other.getX();
         float Ydist = Y - other.getY();
