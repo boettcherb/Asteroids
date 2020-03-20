@@ -1,5 +1,6 @@
 package shape;
 
+import util.Line;
 import util.Point;
 import game_info.Info;
 
@@ -59,7 +60,7 @@ public abstract class Shape implements Info {
         }
     }
 
-    void rotate(float d_theta) {
+    public void rotate(float d_theta) {
         Point center = new Point(X, Y);
         for (Point point : points) {
             float dx = point.getX() - X; // x-dist from center
@@ -88,6 +89,19 @@ public abstract class Shape implements Info {
             float y = radius * (float) Math.sin(theta);
             point.translate(x, y);
         }
+    }
+
+    public boolean intersects(Shape other) {
+        for (int i = 0; i < points.length - 1; ++i) {
+            Line line = new Line(points[i], points[i + 1]);
+            for (int j = 0; j < other.points.length - 1; ++j) {
+                Line otherLine = new Line(other.points[j], other.points[j + 1]);
+                if (line.intersects(otherLine)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public float getX() {

@@ -14,6 +14,7 @@ public class Handler implements Info {
 
     public Handler() {
         shapes = new ArrayList<>();
+        shapes.add(new Asteroid(100, 300));
         player = new Player(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
     }
 
@@ -25,11 +26,11 @@ public class Handler implements Info {
         } else {
             player.tick();
         }
-
         for (int i = 0; i < shapes.size(); ++i) {
             shapes.get(i).tick();
         }
         checkBulletLives();
+        checkPlayerCollisions();
     }
 
     private void checkBulletLives() {
@@ -38,6 +39,17 @@ public class Handler implements Info {
             Shape shape = itr.next();
             if (shape instanceof Bullet && ((Bullet) shape).dead()) {
                 itr.remove();
+            }
+        }
+    }
+
+    private void checkPlayerCollisions() {
+        if (player != null) {
+            for (int i = 0; i < shapes.size(); ++i) {
+                if (shapes.get(i) instanceof Asteroid && player.intersects(shapes.get(i))) {
+                    destroyPlayer();
+                    return;
+                }
             }
         }
     }
