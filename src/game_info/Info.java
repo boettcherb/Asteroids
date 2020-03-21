@@ -7,32 +7,32 @@ import java.awt.Font;
 import java.awt.Rectangle;
 
 public interface Info {
+    // general
     String GAME_TITLE = "ASTEROIDS";
+    int MAX_FPS = 60;
     int CANVAS_WIDTH = 1000;
     int CANVAS_HEIGHT = 700;
-    int MIN_X = -75;
-    int MAX_X = CANVAS_WIDTH + 75;
-    int MIN_Y = -75;
-    int MAX_Y = CANVAS_HEIGHT + 75;
-    int SHIFT_X = MAX_X + 75;
-    int SHIFT_Y = MAX_Y + 75;
-    int MAX_FPS = 60;
+    int BUFFER = 75;
+    int MIN_X = -BUFFER, MIN_Y = -BUFFER;
+    int MAX_X = CANVAS_WIDTH + BUFFER;
+    int MAX_Y = CANVAS_HEIGHT + BUFFER;
+    int SHIFT_X = MAX_X + BUFFER;
+    int SHIFT_Y = MAX_Y + BUFFER;
 
+    // game colors
     Color BACKGROUND_COLOR = Color.BLACK;
     Color FOREGROUND_COlOR = Color.WHITE;
-    Color MENU_PARTICLE_COLOR = Color.GRAY;
 
+    // menu particles
+    Color MENU_PARTICLE_COLOR = Color.GRAY;
     int NUM_PARTICLES = 1000;
     int PARTICLE_SPEED = 3;
     int MAX_PARTICLE_SIZE = 8;
 
+    // menu buttons
     Font BUTTON_FONT = new Font("arial", Font.PLAIN, 60);
     int BUTTON_WIDTH = 300;
     int BUTTON_HEIGHT = 100;
-
-    Font TITLE_FONT = new Font("arial", Font.ITALIC, 135);
-    Rectangle TITLE_RECT = new Rectangle(0, 0, CANVAS_WIDTH, (int) (CANVAS_HEIGHT * 0.4));
-
     float PLAY_BUTTON_HEIGHT = 0.40f;
     float HELP_BUTTON_HEIGHT = 0.57f;
     float QUIT_BUTTON_HEIGHT = 0.74f;
@@ -42,12 +42,22 @@ public interface Info {
     String QUIT_BUTTON_TEXT = "QUIT";
     String BACK_BUTTON_TEXT = "BACK";
 
+    // title (displayed on home menu screen)
+    Font TITLE_FONT = new Font("arial", Font.ITALIC, 135);
+    Rectangle TITLE_RECT = new Rectangle(0, 0, CANVAS_WIDTH, (int) (CANVAS_HEIGHT * 0.4));
+
+    // player / player movement
     Point[] PLAYER_POINTS = { new Point(0, -33), new Point(15, 20), new Point(0, 10), new Point(-15, 20) };
     float PLAYER_ACCELERATION = 0.2f;
     float PLAYER_DECELERATION = 0.984f;
-    float EPSILON = 0.1f;
+    float MIN_VELOCITY = 0.1f;
     float PLAYER_TURN_RATE = 0.1f;
+    int PLAYER_RESPAWN_TIME = 150;
 
+    // asteroids
+    float LARGE_ASTEROID_SPEED = 0.5f;
+    float MEDIUM_ASTEROID_SPEED = 0.7f;
+    float SMALL_ASTEROID_SPEED = 0.9f;
     Point[][] ASTEROID_POINTS = {
         {
             new Point(-37, -74), new Point(21, -74), new Point(75, -42), new Point(75, -20),
@@ -71,15 +81,9 @@ public interface Info {
         }
     };
 
-    float LARGE_ASTEROID_SPEED = 0.5f;
-    float MEDIUM_ASTEROID_SPEED = 0.7f;
-    float SMALL_ASTEROID_SPEED = 0.9f;
-
+    // bullets
     Point[] BULLET_POINTS = { new Point(-1, -1), new Point(-1, 1), new Point(1, 1), new Point(1, -1) };
     int BULLET_SPEED = 11;
     int BULLET_LIFE = 60;
-
-    int PLAYER_RESPAWN_TIME = 150;
-
     int MAX_BULLET_PATH = 2 * BULLET_SPEED;
 }
