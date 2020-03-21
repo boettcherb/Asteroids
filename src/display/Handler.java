@@ -64,9 +64,10 @@ public class Handler implements Info {
             for (Shape shapeJ : shapes) if (shapeJ instanceof Asteroid) {
                 Asteroid asteroid = (Asteroid) shapeJ;
                 Line path = bullet.getPath();
-                if (asteroid.intersects(bullet) || asteroid.intersects(path)) {
+                if (asteroid.intersects(bullet) || (path.length() < MAX_BULLET_PATH && asteroid.intersects(path))) {
                     removeShape(bullet);
                     removeShape(asteroid);
+                    break;
                 }
             }
         }
@@ -110,7 +111,7 @@ public class Handler implements Info {
 
     private void destroyPlayer() {
         player = null;
-        playerDeathTimer = PLAYER_LIFE;
+        playerDeathTimer = PLAYER_RESPAWN_TIME;
     }
 
     public Player getPlayer() {

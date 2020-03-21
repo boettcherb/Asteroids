@@ -13,11 +13,11 @@ public class Bullet extends Shape implements Info {
         life = BULLET_LIFE;
         setVelX((float) Math.sin(theta) * BULLET_SPEED);
         setVelY((float) -Math.cos(theta) * BULLET_SPEED);
-        previousLocation = new Point(x - getVelX(), y - getVelX());
+        previousLocation = new Point(x, y);
     }
 
     public void tick() {
-        previousLocation.translate(getVelX(), getVelY());
+        previousLocation = new Point(getX(), getY());
         translate(getVelX(), getVelY());
         --life;
     }

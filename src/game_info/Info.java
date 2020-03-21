@@ -16,6 +16,7 @@ public interface Info {
     int MAX_Y = CANVAS_HEIGHT + 75;
     int SHIFT_X = MAX_X + 75;
     int SHIFT_Y = MAX_Y + 75;
+    int MAX_FPS = 60;
 
     Color BACKGROUND_COLOR = Color.BLACK;
     Color FOREGROUND_COlOR = Color.WHITE;
@@ -75,8 +76,10 @@ public interface Info {
     float SMALL_ASTEROID_SPEED = 0.9f;
 
     Point[] BULLET_POINTS = { new Point(-1, -1), new Point(-1, 1), new Point(1, 1), new Point(1, -1) };
-    int BULLET_SPEED = 13;
+    int BULLET_SPEED = 11;
     int BULLET_LIFE = 60;
 
-    int PLAYER_LIFE = 200;
+    int PLAYER_RESPAWN_TIME = 150;
+
+    int MAX_BULLET_PATH = 2 * BULLET_SPEED;
 }

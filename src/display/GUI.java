@@ -45,7 +45,7 @@ public class GUI extends Canvas implements Runnable, Info {
 
     public void run() {
         long lastTime = System.nanoTime();
-        double maxFramesPerSecond = 60.0;
+        double maxFramesPerSecond = MAX_FPS;
         double ns = 1e9 / maxFramesPerSecond;
         double delta = 0;
         while (running) {

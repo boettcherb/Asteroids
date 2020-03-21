@@ -38,4 +38,8 @@ public class Line {
         return q.getX() <= Math.max(p.getX(), r.getX()) && q.getX() >= Math.min(p.getX(), r.getX()) &&
             q.getY() <= Math.max(p.getY(), r.getY()) && q.getY() >= Math.min(p.getY(), r.getY());
     }
+
+    public float length() {
+        return p1.distTo(p2);
+    }
 }
