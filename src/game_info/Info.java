@@ -46,6 +46,16 @@ public interface Info {
     Font TITLE_FONT = new Font("arial", Font.ITALIC, 135);
     Rectangle TITLE_RECT = new Rectangle(0, 0, CANVAS_WIDTH, (int) (CANVAS_HEIGHT * 0.4));
 
+    // hud
+    float LIVES_SCALE = 0.5f;
+    int STARTING_LIVES = 3;
+    int LIVES_X = 20;
+    int LIVES_Y = 30;
+    int LIVES_DIST = 30;
+    Font SCORE_FONT = new Font("arial", Font.PLAIN, 15);
+    int SCORE_X = 20;
+    int SCORE_Y = CANVAS_HEIGHT - 50;
+
     // player / player movement
     Point[] PLAYER_POINTS = { new Point(0, -33), new Point(15, 20), new Point(0, 10), new Point(-15, 20) };
     float PLAYER_ACCELERATION = 0.2f;
@@ -58,6 +68,9 @@ public interface Info {
     float LARGE_ASTEROID_SPEED = 0.5f;
     float MEDIUM_ASTEROID_SPEED = 0.7f;
     float SMALL_ASTEROID_SPEED = 0.9f;
+    int SMALL_SCORE = 100;
+    int MEDIUM_SCORE = 50;
+    int LARGE_SCORE = 20;
     Point[][] ASTEROID_POINTS = {
         {
             new Point(-37, -74), new Point(21, -74), new Point(75, -42), new Point(75, -20),

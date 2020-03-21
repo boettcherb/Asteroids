@@ -66,7 +66,6 @@ public class Menu implements Info {
         } else {
             renderHelp(g);
         }
-
     }
 
     private void renderStart(Graphics g) {

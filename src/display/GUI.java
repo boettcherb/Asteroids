@@ -13,12 +13,14 @@ public class GUI extends Canvas implements Runnable, Info {
     private Thread thread;
     private Menu menu;
     private Handler handler;
+    private HUD hud;
 
     public GUI() {
         new Frame(this);
         thread = new Thread(this);
         menu = new Menu(this);
-        handler = new Handler();
+        hud = new HUD();
+        handler = new Handler(hud);
         addMouseListener(new MouseInput(menu));
         addKeyListener(new KeyInput(this, handler));
         createBufferStrategy(3);
@@ -45,8 +47,7 @@ public class GUI extends Canvas implements Runnable, Info {
 
     public void run() {
         long lastTime = System.nanoTime();
-        double maxFramesPerSecond = MAX_FPS;
-        double ns = 1e9 / maxFramesPerSecond;
+        double ns = 1e9 / MAX_FPS;
         double delta = 0;
         while (running) {
             long now = System.nanoTime();
@@ -77,6 +78,7 @@ public class GUI extends Canvas implements Runnable, Info {
         g.setColor(FOREGROUND_COlOR);
         if (playing) {
             handler.render(g);
+            hud.render(g);
         } else {
             menu.render(g);
         }

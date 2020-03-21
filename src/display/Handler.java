@@ -11,10 +11,12 @@ import java.util.Random;
 public class Handler implements Info {
     private LinkedList<Shape> shapes;
     private LinkedList<Shape> added, removed;
+    private HUD hud;
     private Player player;
     private int playerDeathTimer;
 
-    public Handler() {
+    public Handler(HUD hud) {
+        this.hud = hud;
         shapes = new LinkedList<>();
         added = new LinkedList<>();
         removed = new LinkedList<>();
@@ -102,9 +104,13 @@ public class Handler implements Info {
             if (asteroid.getType() == Asteroid.AsteroidType.Large) {
                 addShape(new Asteroid(asteroid.getX(), asteroid.getY(), Asteroid.AsteroidType.Medium));
                 addShape(new Asteroid(asteroid.getX(), asteroid.getY(), Asteroid.AsteroidType.Medium));
+                hud.addToScore(LARGE_SCORE);
             } else if (asteroid.getType() == Asteroid.AsteroidType.Medium) {
                 addShape(new Asteroid(asteroid.getX(), asteroid.getY(), Asteroid.AsteroidType.Small));
                 addShape(new Asteroid(asteroid.getX(), asteroid.getY(), Asteroid.AsteroidType.Small));
+                hud.addToScore(MEDIUM_SCORE);
+            } else {
+                hud.addToScore(SMALL_SCORE);
             }
         }
     }
@@ -112,6 +118,7 @@ public class Handler implements Info {
     private void destroyPlayer() {
         player = null;
         playerDeathTimer = PLAYER_RESPAWN_TIME;
+        hud.loseALife();
     }
 
     public Player getPlayer() {
