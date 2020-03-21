@@ -20,7 +20,7 @@ public class GUI extends Canvas implements Runnable, Info {
         thread = new Thread(this);
         menu = new Menu(this);
         hud = new HUD();
-        handler = new Handler(hud);
+        handler = new Handler(hud, menu);
         addMouseListener(new MouseInput(menu));
         addKeyListener(new KeyInput(this, handler));
         createBufferStrategy(3);
@@ -92,6 +92,11 @@ public class GUI extends Canvas implements Runnable, Info {
 
     public void setPlaying(boolean play) {
         playing = play;
+        if (playing) {
+            handler.newGame();
+        } else {
+            menu.setStartMenu();
+        }
     }
 
     public static void main(String[] args) {

@@ -79,6 +79,14 @@ public class Menu implements Info {
         back.draw(g);
     }
 
+    public void endGame() {
+        gui.setPlaying(false);
+    }
+
+    public void setStartMenu() {
+        menuState = MenuState.Start;
+    }
+
     private static class Particle {
         private double x, y, depth;
         private final Random rand = new Random();

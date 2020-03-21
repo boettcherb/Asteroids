@@ -12,16 +12,29 @@ public class Handler implements Info {
     private LinkedList<Shape> shapes;
     private LinkedList<Shape> added, removed;
     private HUD hud;
+    private Menu menu;
     private Player player;
     private int playerDeathTimer;
+    private int level;
 
-    public Handler(HUD hud) {
+    public Handler(HUD hud, Menu menu) {
         this.hud = hud;
+        this.menu = menu;
         shapes = new LinkedList<>();
         added = new LinkedList<>();
         removed = new LinkedList<>();
+    }
+
+    public void newGame() {
+        newLevel(1);
+    }
+
+    public void newLevel(int level) {
+        shapes.clear();
+        added.clear();
+        removed.clear();
         Random rand = new Random();
-        for (int i = 0; i < 4; ++i) {
+        for (int i = 0; i < level + 3; ++i) {
             addShape(new Asteroid(rand.nextInt(CANVAS_WIDTH), rand.nextInt(CANVAS_HEIGHT), Asteroid.AsteroidType.Large));
         }
         player = new Player(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
@@ -113,21 +126,34 @@ public class Handler implements Info {
                 hud.addToScore(SMALL_SCORE);
             }
         }
+        if (noAsteroids()) {
+            newLevel(++level);
+        }
+    }
+
+    private boolean noAsteroids() {
+        for (Shape shape : shapes) {
+            if (shape instanceof Asteroid) {
+                return false;
+            }
+        }
+        for (Shape shape : added) {
+            if (shape instanceof Asteroid) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private void destroyPlayer() {
         player = null;
         playerDeathTimer = PLAYER_RESPAWN_TIME;
-        hud.loseALife();
+        if (hud.loseALife()) {
+            menu.endGame();
+        }
     }
 
     public Player getPlayer() {
         return player;
-    }
-
-    public void clearAll() {
-        shapes.clear();
-        added.clear();
-        removed.clear();
     }
 }
