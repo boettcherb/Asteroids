@@ -12,6 +12,7 @@ public interface Info {
     int MAX_FPS = 60;
     int CANVAS_WIDTH = 1000;
     int CANVAS_HEIGHT = 700;
+    int TIME_BETWEEN_LEVELS = 100;
 
     // game colors
     Color BACKGROUND_COLOR = Color.BLACK;
@@ -57,6 +58,8 @@ public interface Info {
     float MIN_VELOCITY = 0.1f;
     float PLAYER_TURN_RATE = 0.075f;
     int PLAYER_RESPAWN_TIME = 150;
+    int PLAYER_SAVE_TIME = 400;
+    int PLAYER_FLASH_TIME = 20;
 
     // asteroids
     float LARGE_ASTEROID_SPEED = 0.7f;
@@ -93,5 +96,6 @@ public interface Info {
     Point[] BULLET_POINTS = { new Point(-1, -1), new Point(-1, 1), new Point(1, 1), new Point(1, -1) };
     int BULLET_SPEED = 11;
     int BULLET_LIFE = 50;
+    int BULLET_STARTING_DIST = 30;
     int MAX_BULLET_PATH_LENGTH = 2 * BULLET_SPEED;
 }

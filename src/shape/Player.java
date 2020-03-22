@@ -30,7 +30,9 @@ public class Player extends Shape implements Info {
     }
 
     public Bullet shoot() {
-        return new Bullet(getX(), getY(), theta);
+        float x = getX() + (float) Math.sin(theta) * BULLET_STARTING_DIST;
+        float y = getY() - (float) Math.cos(theta) * BULLET_STARTING_DIST;
+        return new Bullet(x, y, theta);
     }
 
     public void setAccelerate(boolean accelerate) {

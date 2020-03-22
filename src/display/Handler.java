@@ -15,7 +15,7 @@ public class Handler implements Info {
     private HUD hud;
     private Menu menu;
     private Player player;
-    private int playerDeathTimer;
+    private int playerDeathTimer, playerSaveTimer, newLevelTimer;
     private int level;
 
     public Handler(HUD hud, Menu menu) {
@@ -28,8 +28,10 @@ public class Handler implements Info {
 
     public void newGame() {
         player = new Player(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
+        playerSaveTimer = PLAYER_SAVE_TIME;
         hud.newGame();
-        newLevel(1);
+        level = 1;
+        newLevel(level);
     }
 
     public void newLevel(int level) {
@@ -51,10 +53,16 @@ public class Handler implements Info {
         if (player == null) {
             if (playerDeathTimer-- < 0) {
                 player = new Player(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
+                playerSaveTimer = PLAYER_SAVE_TIME;
             }
         } else {
             player.tick();
             checkPlayerCollisions();
+        }
+        if (newLevelTimer > 0) {
+            if (--newLevelTimer == 0) {
+                newLevel(++level);
+            }
         }
         shapes.forEach(shape -> shape.tick());
         checkBulletLives();
@@ -63,11 +71,13 @@ public class Handler implements Info {
     }
 
     private void checkPlayerCollisions() {
-        for (Shape shape : shapes) {
-            if (shape instanceof Asteroid && player.intersects(shape)) {
-                destroyPlayer();
-                removeShape(shape);
-                break;
+        if (playerSaveTimer <= 0) {
+            for (Shape shape : shapes) {
+                if (shape instanceof Asteroid && player.intersects(shape)) {
+                    destroyPlayer();
+                    removeShape(shape);
+                    break;
+                }
             }
         }
     }
@@ -108,7 +118,14 @@ public class Handler implements Info {
 
     public void render(Graphics g) {
         if (player != null) {
-            player.render(g);
+            if (playerSaveTimer > 0) {
+                --playerSaveTimer;
+                if ((playerSaveTimer / PLAYER_FLASH_TIME) % 2 == 1) {
+                    player.render(g);
+                }
+            } else {
+                player.render(g);
+            }
         }
         shapes.forEach(shape -> shape.render(g));
     }
@@ -134,7 +151,7 @@ public class Handler implements Info {
             }
         }
         if (noAsteroids()) {
-            newLevel(++level);
+            newLevelTimer = TIME_BETWEEN_LEVELS;
         }
     }
 
