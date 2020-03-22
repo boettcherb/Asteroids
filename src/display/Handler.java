@@ -52,8 +52,12 @@ public class Handler implements Info {
     public void tick() {
         if (player == null) {
             if (playerDeathTimer-- < 0) {
-                player = new Player(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
-                playerSaveTimer = PLAYER_SAVE_TIME;
+                if (hud.getNumLives() == 0) {
+                    menu.endGame();
+                } else {
+                    player = new Player(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
+                    playerSaveTimer = PLAYER_SAVE_TIME;
+                }
             }
         } else {
             player.tick();
@@ -172,9 +176,7 @@ public class Handler implements Info {
     private void destroyPlayer() {
         player = null;
         playerDeathTimer = PLAYER_RESPAWN_TIME;
-        if (hud.loseALife()) {
-            menu.endGame();
-        }
+        hud.loseALife();
     }
 
     public Player getPlayer() {

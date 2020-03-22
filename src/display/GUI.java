@@ -67,7 +67,6 @@ public class GUI extends Canvas implements Runnable, Info {
         } else {
             menu.tick();
         }
-
     }
 
     public void render() {
