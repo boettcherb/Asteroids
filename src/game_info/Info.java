@@ -52,7 +52,7 @@ public interface Info {
 
     // player / player movement
     Point[] PLAYER_POINTS = { new Point(0, -33), new Point(15, 20), new Point(0, 10), new Point(-15, 20) };
-    float PLAYER_ACCELERATION = 0.2f;
+    float PLAYER_ACCELERATION = 0.18f;
     float PLAYER_DECELERATION = 0.984f;
     float MIN_VELOCITY = 0.1f;
     float PLAYER_TURN_RATE = 0.075f;

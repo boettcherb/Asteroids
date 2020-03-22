@@ -10,6 +10,7 @@ import java.awt.event.KeyListener;
 public class KeyInput implements KeyListener {
     private GUI gui;
     private Handler handler;
+    boolean spacePressed;
 
     public KeyInput(GUI gui, Handler handler) {
         this.gui = gui;
@@ -29,8 +30,9 @@ public class KeyInput implements KeyListener {
             if (key == KeyEvent.VK_LEFT) {
                 player.setTurnLeft(true);
             }
-            if (key == KeyEvent.VK_SPACE) {
+            if (key == KeyEvent.VK_SPACE && !spacePressed) {
                 handler.addShape(player.shoot());
+                spacePressed = true;
             }
         }
     }
@@ -47,6 +49,9 @@ public class KeyInput implements KeyListener {
             }
             if (key == KeyEvent.VK_LEFT) {
                 player.setTurnLeft(false);
+            }
+            if (key == KeyEvent.VK_SPACE) {
+                spacePressed = false;
             }
         }
     }
