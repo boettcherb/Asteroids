@@ -9,6 +9,7 @@ import java.awt.Rectangle;
 public interface Info {
     // general
     String GAME_TITLE = "ASTEROIDS";
+    String FRAME_TITLE = "Asteroids v2";
     int MAX_FPS = 60;
     int CANVAS_WIDTH = 1000;
     int CANVAS_HEIGHT = 700;
@@ -31,11 +32,17 @@ public interface Info {
     float PLAY_BUTTON_HEIGHT = 0.40f;
     float HELP_BUTTON_HEIGHT = 0.57f;
     float QUIT_BUTTON_HEIGHT = 0.74f;
-    float BACK_BUTTON_HEIGHT = 0.74f;
     String PLAY_BUTTON_TEXT = "PLAY";
     String HELP_BUTTON_TEXT = "HELP";
     String QUIT_BUTTON_TEXT = "QUIT";
+
+    // help screen
+    float BACK_BUTTON_HEIGHT = 0.74f;
     String BACK_BUTTON_TEXT = "BACK";
+    int HELP_TEXT_X = 30, HELP_TEXT_Y = 50;
+    int LINE_SPACE = 50;
+    String HELP_TEXT_FILE_PATH = "res\\HelpText.txt";
+    Font HELP_TEXT_FONT = new Font("arial", Font.PLAIN, 28);
 
     // title (displayed on home menu screen)
     Font TITLE_FONT = new Font("arial", Font.ITALIC, 135);

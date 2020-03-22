@@ -1,0 +1,4 @@
+Stay alive as long as possible by avoiding asteroids and UFOs.
+Use the up arrow to move forward and use the left and right arrows to turn.
+Press the spacebar to shoot.
+Press ESCAPE to exit the game.

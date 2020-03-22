@@ -9,7 +9,7 @@ public class Frame implements Info {
     private JFrame frame;
 
     public Frame(GUI gui) {
-        frame = new JFrame(GAME_TITLE);
+        frame = new JFrame(FRAME_TITLE);
         int frameWidth = CANVAS_WIDTH + frame.getInsets().left + frame.getInsets().right;
         int frameHeight = CANVAS_HEIGHT + frame.getInsets().top + frame.getInsets().bottom;
         setDimensions(new Dimension(frameWidth, frameHeight));
