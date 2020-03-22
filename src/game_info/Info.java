@@ -12,12 +12,6 @@ public interface Info {
     int MAX_FPS = 60;
     int CANVAS_WIDTH = 1000;
     int CANVAS_HEIGHT = 700;
-    int BUFFER = 75;
-    int MIN_X = -BUFFER, MIN_Y = -BUFFER;
-    int MAX_X = CANVAS_WIDTH + BUFFER;
-    int MAX_Y = CANVAS_HEIGHT + BUFFER;
-    int SHIFT_X = MAX_X + BUFFER;
-    int SHIFT_Y = MAX_Y + BUFFER;
 
     // game colors
     Color BACKGROUND_COLOR = Color.BLACK;
@@ -61,13 +55,14 @@ public interface Info {
     float PLAYER_ACCELERATION = 0.2f;
     float PLAYER_DECELERATION = 0.984f;
     float MIN_VELOCITY = 0.1f;
-    float PLAYER_TURN_RATE = 0.1f;
+    float PLAYER_TURN_RATE = 0.075f;
     int PLAYER_RESPAWN_TIME = 150;
 
     // asteroids
-    float LARGE_ASTEROID_SPEED = 0.5f;
-    float MEDIUM_ASTEROID_SPEED = 0.7f;
-    float SMALL_ASTEROID_SPEED = 0.9f;
+    float LARGE_ASTEROID_SPEED = 0.7f;
+    float MAX_MEDIUM_ASTEROID_SPEED = 2f;
+    float MAX_SMALL_ASTEROID_SPEED = 4f;
+    float MIN_ASTEROID_SPEED = 0.3f;
     int SMALL_SCORE = 100;
     int MEDIUM_SCORE = 50;
     int LARGE_SCORE = 20;
@@ -97,6 +92,6 @@ public interface Info {
     // bullets
     Point[] BULLET_POINTS = { new Point(-1, -1), new Point(-1, 1), new Point(1, 1), new Point(1, -1) };
     int BULLET_SPEED = 11;
-    int BULLET_LIFE = 60;
-    int MAX_BULLET_PATH = 2 * BULLET_SPEED;
+    int BULLET_LIFE = 50;
+    int MAX_BULLET_PATH_LENGTH = 2 * BULLET_SPEED;
 }

@@ -11,8 +11,6 @@ public class HUD implements Info {
     private Player playerImage;
 
     public HUD() {
-        numLives = STARTING_LIVES;
-        score = 0;
         playerImage = new Player(LIVES_X, LIVES_Y);
         playerImage.scale(LIVES_SCALE);
     }
@@ -23,9 +21,14 @@ public class HUD implements Info {
             playerImage.translate(LIVES_DIST, 0);
         }
         playerImage.translate(-LIVES_DIST * numLives, 0);
-        String str = "Score: " + Integer.toString(score);
+        String str = "Score: " + score;
         g.setFont(SCORE_FONT);
         g.drawString(str, SCORE_X, SCORE_Y);
+    }
+
+    public void newGame() {
+        score = 0;
+        numLives = STARTING_LIVES;
     }
 
     public void addToScore(int val) {

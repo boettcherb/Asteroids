@@ -3,6 +3,7 @@ package display;
 import game_info.Info;
 import shape.*;
 import util.Line;
+import util.Point;
 
 import java.awt.Graphics;
 import java.util.LinkedList;
@@ -26,6 +27,8 @@ public class Handler implements Info {
     }
 
     public void newGame() {
+        player = new Player(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
+        hud.newGame();
         newLevel(1);
     }
 
@@ -35,9 +38,13 @@ public class Handler implements Info {
         removed.clear();
         Random rand = new Random();
         for (int i = 0; i < level + 3; ++i) {
-            addShape(new Asteroid(rand.nextInt(CANVAS_WIDTH), rand.nextInt(CANVAS_HEIGHT), Asteroid.AsteroidType.Large));
+            int x, y;
+            do {
+                x = rand.nextInt(CANVAS_WIDTH);
+                y = rand.nextInt(CANVAS_HEIGHT);
+            } while (new Point(x, y).distTo(new Point(player.getX(), player.getY())) < 200);
+            addShape(new Asteroid(x, y, Asteroid.AsteroidType.Large));
         }
-        player = new Player(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
     }
 
     public void tick() {
@@ -79,7 +86,7 @@ public class Handler implements Info {
             for (Shape shapeJ : shapes) if (shapeJ instanceof Asteroid) {
                 Asteroid asteroid = (Asteroid) shapeJ;
                 Line path = bullet.getPath();
-                if (asteroid.intersects(bullet) || (path.length() < MAX_BULLET_PATH && asteroid.intersects(path))) {
+                if (asteroid.intersects(bullet) || (path.length() < MAX_BULLET_PATH_LENGTH && asteroid.intersects(path))) {
                     removeShape(bullet);
                     removeShape(asteroid);
                     break;
@@ -133,7 +140,7 @@ public class Handler implements Info {
 
     private boolean noAsteroids() {
         for (Shape shape : shapes) {
-            if (shape instanceof Asteroid) {
+            if (shape instanceof Asteroid && !removed.contains(shape)) {
                 return false;
             }
         }

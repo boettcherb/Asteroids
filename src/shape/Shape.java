@@ -10,6 +10,7 @@ public abstract class Shape implements Info {
     private Point[] points;
     private float X, Y;
     private float velX, velY;
+    private float bufferX, bufferY;
 
     public Shape(Point[] points, float x, float y) {
         this.points = new Point[points.length + 1];
@@ -21,25 +22,43 @@ public abstract class Shape implements Info {
     }
 
     public void translate(float x, float y) {
+        calculateDimensions();
         X += x;
         Y += y;
+        float SHIFT_X = CANVAS_WIDTH + 2 * bufferX;
+        float SHIFT_Y = CANVAS_HEIGHT + 2 * bufferY;
         translatePoints(x, y);
-        if (X > MAX_X) {
+        if (X > CANVAS_HEIGHT + bufferY) {
             X -= SHIFT_X;
             translatePoints(-SHIFT_X, 0);
         }
-        if (X < MIN_X) {
+        if (X < -bufferX) {
             X += SHIFT_X;
             translatePoints(SHIFT_X, 0);
         }
-        if (Y > MAX_Y) {
+        if (Y > CANVAS_HEIGHT + bufferY) {
             Y -= SHIFT_Y;
             translatePoints(0, -SHIFT_Y);
         }
-        if (Y < MIN_Y) {
+        if (Y < -bufferY) {
             Y += SHIFT_Y;
             translatePoints(0, SHIFT_Y);
         }
+    }
+
+    private void calculateDimensions() {
+        float minX = Integer.MAX_VALUE;
+        float maxX = Integer.MIN_VALUE;
+        float minY = Integer.MAX_VALUE;
+        float maxY = Integer.MIN_VALUE;
+        for (Point point : points) {
+            minX = Math.min(minX, point.getX());
+            maxX = Math.max(maxX, point.getX());
+            minY = Math.min(minY, point.getY());
+            maxY = Math.max(maxY, point.getY());
+        }
+        bufferX = (maxX - minX) / 2;
+        bufferY = (maxY - minY) / 2;
     }
 
     private void translatePoints(float dx, float dy) {
