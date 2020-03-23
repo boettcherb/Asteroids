@@ -78,8 +78,7 @@ public class Menu implements Info {
 
     private void renderHelp(Graphics g) {
         g.setFont(HELP_TEXT_FONT);
-        StringBuilder helpText = new StringBuilder();
-        InputReader inputReader = new InputReader(HELP_TEXT_FILE_PATH);
+        InputReader inputReader = new InputReader(HELP_TEXT_FILE);
         int line = 0;
         while (inputReader.hasNextLine()) {
             g.drawString(inputReader.nextLine(), HELP_TEXT_X, HELP_TEXT_Y + line * LINE_SPACE);

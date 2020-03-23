@@ -1,20 +1,16 @@
 package util;
 
-import java.io.IOException;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.util.StringTokenizer;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.IOException;
 
 public class InputReader {
     private BufferedReader br;
 
-    public InputReader(String filePath) {
-        try {
-            br = new BufferedReader(new FileReader(filePath));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+    public InputReader(String fileName) {
+        InputStream in = this.getClass().getResourceAsStream(fileName);
+        br = new BufferedReader(new InputStreamReader(in));
     }
 
     public boolean hasNextLine() {
