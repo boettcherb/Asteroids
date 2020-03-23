@@ -17,6 +17,7 @@ public class Handler implements Info {
     private Player player;
     private int playerDeathTimer, playerSaveTimer, newLevelTimer;
     private int level;
+    private DestroyedPlayer destroyedPlayer;
 
     public Handler(HUD hud, Menu menu) {
         this.hud = hud;
@@ -58,6 +59,8 @@ public class Handler implements Info {
                     player = new Player(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
                     playerSaveTimer = PLAYER_SAVE_TIME;
                 }
+            } else {
+                destroyedPlayer.tick();
             }
         } else {
             player.tick();
@@ -130,6 +133,8 @@ public class Handler implements Info {
             } else {
                 player.render(g);
             }
+        } else {
+            destroyedPlayer.render(g);
         }
         shapes.forEach(shape -> shape.render(g));
     }
@@ -174,9 +179,11 @@ public class Handler implements Info {
     }
 
     private void destroyPlayer() {
+        destroyedPlayer = new DestroyedPlayer(player.getX(), player.getY());
         player = null;
         playerDeathTimer = PLAYER_RESPAWN_TIME;
         hud.loseALife();
+
     }
 
     public Player getPlayer() {

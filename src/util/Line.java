@@ -42,4 +42,12 @@ public class Line {
     public float length() {
         return p1.distTo(p2);
     }
+
+    public Point getP1() {
+        return p1;
+    }
+
+    public Point getP2() {
+        return p2;
+    }
 }

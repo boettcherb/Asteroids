@@ -68,6 +68,11 @@ public interface Info {
     int PLAYER_SAVE_TIME = 400;
     int PLAYER_FLASH_TIME = 20;
 
+    // destroyed player lines
+    int NUM_LINES = 4;
+    float MAX_LINE_SPEED = 0.5f;
+    float MAX_LINE_LENGTH = 20;
+
     // asteroids
     float LARGE_ASTEROID_SPEED = 0.7f;
     float MAX_MEDIUM_ASTEROID_SPEED = 2f;
