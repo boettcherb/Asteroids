@@ -59,8 +59,14 @@ public interface Info {
     int SCORE_Y = CANVAS_HEIGHT - 50;
 
     // player / player movement
-    Point[] PLAYER_POINTS = { new Point(0, -33), new Point(15, 20), new Point(0, 10), new Point(-15, 20) };
-    float PLAYER_ACCELERATION = 0.18f;
+    Point[] PLAYER_POINTS = {
+        new Point(0, -30), new Point(-15, 15), new Point(-12, 7),
+        new Point(-5, 7), new Point(0, 18), new Point(5, 7),
+        new Point(-5, 7), new Point(12, 7), new Point(15, 15)
+    };
+    int FIRST_AC_POINT = 3;
+    int LAST_AC_POINT = 5;
+    float PLAYER_ACCELERATION = 0.12f;
     float PLAYER_DECELERATION = 0.984f;
     float MIN_VELOCITY = 0.1f;
     float PLAYER_TURN_RATE = 0.075f;
@@ -105,7 +111,9 @@ public interface Info {
     };
 
     // bullets
-    Point[] BULLET_POINTS = { new Point(-1, -1), new Point(-1, 1), new Point(1, 1), new Point(1, -1) };
+    Point[] BULLET_POINTS = {
+        new Point(-1, -1), new Point(-1, 1), new Point(1, 1), new Point(1, -1)
+    };
     int BULLET_SPEED = 11;
     int BULLET_LIFE = 50;
     int BULLET_STARTING_DIST = 30;

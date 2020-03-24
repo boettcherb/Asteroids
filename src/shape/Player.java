@@ -35,6 +35,10 @@ public class Player extends Shape implements Info {
         return new Bullet(x, y, theta);
     }
 
+    public boolean isAccelerating() {
+        return accelerate;
+    }
+
     public void setAccelerate(boolean accelerate) {
         this.accelerate = accelerate;
     }

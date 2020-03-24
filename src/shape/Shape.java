@@ -71,6 +71,12 @@ public abstract class Shape implements Info {
 
     public void render(Graphics g) {
         for (int i = 0; i < points.length - 1; ++i) {
+            if (this instanceof Player) {
+                Player player = (Player) this;
+                if (!player.isAccelerating() && i >= FIRST_AC_POINT && i <= LAST_AC_POINT) {
+                    continue;
+                }
+            }
             int x1 = (int) points[i].getX();
             int y1 = (int) points[i].getY();
             int x2 = (int) points[i + 1].getX();
