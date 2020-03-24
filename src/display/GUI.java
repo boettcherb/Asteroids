@@ -24,6 +24,7 @@ public class GUI extends Canvas implements Runnable, Info {
         addMouseListener(new MouseInput(menu));
         addKeyListener(new KeyInput(this, handler));
         createBufferStrategy(3);
+        requestFocus();
     }
 
     public void start() {

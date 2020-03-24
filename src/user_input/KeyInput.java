@@ -19,6 +19,13 @@ public class KeyInput implements KeyListener {
 
     public void keyPressed(KeyEvent keyEvent) {
         int key = keyEvent.getKeyCode();
+        if (key == KeyEvent.VK_ESCAPE) {
+            if (gui.isPlaying()) {
+                gui.setPlaying(false);
+            } else {
+                gui.stop();
+            }
+        }
         Player player = handler.getPlayer();
         if (gui.isPlaying() && player != null) {
             if (key == KeyEvent.VK_UP) {
