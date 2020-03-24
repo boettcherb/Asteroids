@@ -21,7 +21,7 @@ public class DestroyedPlayer implements Info {
             float x2 = X + rand.nextFloat() * MAX_LINE_LENGTH * (rand.nextBoolean() ? 1 : -1);
             float y2 = Y + rand.nextFloat() * MAX_LINE_LENGTH * (rand.nextBoolean() ? 1 : -1);
             Line line = new Line(new Point(x1, y1), new Point(x2, y2));
-            if (line.length() > 5) {
+            if (line.length() > MIN_LINE_LENGTH) {
                 lines[lineIndex++] = line;
             }
         }

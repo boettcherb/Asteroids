@@ -45,7 +45,7 @@ public class Handler implements Info {
             do {
                 x = rand.nextInt(CANVAS_WIDTH);
                 y = rand.nextInt(CANVAS_HEIGHT);
-            } while (new Point(x, y).distTo(new Point(player.getX(), player.getY())) < 200);
+            } while (new Point(x, y).distTo(new Point(player.getX(), player.getY())) < MIN_SPAWN_DIST_FROM_PLAYER);
             addShape(new Asteroid(x, y, Asteroid.AsteroidType.Large));
         }
     }

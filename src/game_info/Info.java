@@ -78,15 +78,17 @@ public interface Info {
     int NUM_LINES = 4;
     float MAX_LINE_SPEED = 0.5f;
     float MAX_LINE_LENGTH = 20;
+    float MIN_LINE_LENGTH = 5;
 
     // asteroids
-    float LARGE_ASTEROID_SPEED = 0.7f;
-    float MAX_MEDIUM_ASTEROID_SPEED = 2f;
-    float MAX_SMALL_ASTEROID_SPEED = 4f;
+    float LARGE_ASTEROID_SPEED = 1.8f;
+    float MAX_MEDIUM_ASTEROID_SPEED = 3f;
+    float MAX_SMALL_ASTEROID_SPEED = 5f;
     float MIN_ASTEROID_SPEED = 0.3f;
     int SMALL_SCORE = 100;
     int MEDIUM_SCORE = 50;
     int LARGE_SCORE = 20;
+    int MIN_SPAWN_DIST_FROM_PLAYER = 300;
     Point[][] ASTEROID_POINTS = {
         {
             new Point(-37, -74), new Point(21, -74), new Point(75, -42), new Point(75, -20),
