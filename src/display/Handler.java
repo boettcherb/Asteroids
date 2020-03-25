@@ -53,28 +53,14 @@ public class Handler implements Info {
     }
 
     public void tick() {
+        shapes.forEach(shape -> shape.tick());
+        manageTimers();
         if (player == null) {
-            if (--playerDeathTimer == 0) {
-                if (hud.getNumLives() == 0) {
-                    menu.endGame();
-                } else {
-                    player = new Player(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
-                    playerSaveTimer = PLAYER_SAVE_TIME;
-                }
-            } else {
-                destroyedPlayer.tick();
-            }
+            destroyedPlayer.tick();
         } else {
             player.tick();
             checkPlayerCollisions();
         }
-        if (newLevelTimer > 0) {
-            if (--newLevelTimer == 0) {
-                newLevel();
-            }
-        }
-        shapes.forEach(shape -> shape.tick());
-        checkBulletLives();
         checkBulletCollisions();
         resetLists();
     }
@@ -91,15 +77,12 @@ public class Handler implements Info {
         }
     }
 
-    private void checkBulletLives() {
+    private void checkBulletCollisions() {
         for (Shape shape : shapes) {
             if (shape instanceof Bullet && ((Bullet) shape).dead()) {
                 removeShape(shape);
             }
         }
-    }
-
-    private void checkBulletCollisions() {
         for (Shape shapeI : shapes) if (shapeI instanceof Bullet) {
             Bullet bullet = (Bullet) shapeI;
             for (Shape shapeJ : shapes) if (shapeJ instanceof Asteroid) {
@@ -130,13 +113,30 @@ public class Handler implements Info {
         if (player == null) {
             destroyedPlayer.render(g);
         } else {
+            if (playerSaveTimer == 0 || (playerSaveTimer / PLAYER_FLASH_TIME) % 2 == 0) {
+                player.render(g);
+            }
+        }
+    }
+
+    private void manageTimers() {
+        if (player == null) {
+            if (--playerDeathTimer == 0) {
+                if (hud.getNumLives() == 0) {
+                    menu.endGame();
+                } else {
+                    player = new Player(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
+                    playerSaveTimer = PLAYER_SAVE_TIME;
+                }
+            }
+        } else {
             if (playerSaveTimer > 0) {
                 --playerSaveTimer;
-                if ((playerSaveTimer / PLAYER_FLASH_TIME) % 2 == 1) {
-                    player.render(g);
-                }
-            } else {
-                player.render(g);
+            }
+        }
+        if (newLevelTimer > 0) {
+            if (--newLevelTimer == 0) {
+                newLevel();
             }
         }
     }
