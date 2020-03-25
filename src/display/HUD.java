@@ -8,6 +8,7 @@ import java.awt.Graphics;
 public class HUD implements Info {
     private int numLives;
     private int score;
+    private int level;
     private Player playerImage;
 
     public HUD() {
@@ -29,6 +30,15 @@ public class HUD implements Info {
     public void newGame() {
         score = 0;
         numLives = STARTING_LIVES;
+        level = 0;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void nextLevel() {
+        ++level;
     }
 
     public void addToScore(int val) {

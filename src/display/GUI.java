@@ -91,12 +91,12 @@ public class GUI extends Canvas implements Runnable, Info {
     }
 
     public void setPlaying(boolean play) {
-        playing = play;
-        if (playing) {
+        if (play) {
             handler.newGame();
         } else {
             menu.setStartMenu();
         }
+        playing = play;
     }
 
     public static void main(String[] args) {

@@ -71,8 +71,8 @@ public interface Info {
     float MIN_VELOCITY = 0.1f;
     float PLAYER_TURN_RATE = 0.075f;
     int PLAYER_RESPAWN_TIME = 150;
-    int PLAYER_SAVE_TIME = 400;
-    int PLAYER_FLASH_TIME = 20;
+    int PLAYER_SAVE_TIME = 150;
+    int PLAYER_FLASH_TIME = 10;
 
     // destroyed player lines
     int NUM_LINES = 4;
@@ -120,4 +120,7 @@ public interface Info {
     int BULLET_LIFE = 50;
     int BULLET_STARTING_DIST = 30;
     int MAX_BULLET_PATH_LENGTH = 2 * BULLET_SPEED;
+
+    // sounds
+    String FIRE_SOUND_FILE = "fire.wav";
 }

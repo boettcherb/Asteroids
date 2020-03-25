@@ -4,6 +4,7 @@ import game_info.Info;
 import shape.*;
 import util.Line;
 import util.Point;
+import util.Sound;
 
 import java.awt.Graphics;
 import java.util.LinkedList;
@@ -16,8 +17,8 @@ public class Handler implements Info {
     private Menu menu;
     private Player player;
     private int playerDeathTimer, playerSaveTimer, newLevelTimer;
-    private int level;
     private DestroyedPlayer destroyedPlayer;
+    private Sound fire;
 
     public Handler(HUD hud, Menu menu) {
         this.hud = hud;
@@ -25,22 +26,23 @@ public class Handler implements Info {
         shapes = new LinkedList<>();
         added = new LinkedList<>();
         removed = new LinkedList<>();
+        fire = new Sound(FIRE_SOUND_FILE);
     }
 
     public void newGame() {
-        player = new Player(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
-        playerSaveTimer = PLAYER_SAVE_TIME;
-        hud.newGame();
-        level = 1;
-        newLevel(level);
-    }
-
-    public void newLevel(int level) {
         shapes.clear();
         added.clear();
         removed.clear();
+        player = new Player(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
+        playerSaveTimer = PLAYER_SAVE_TIME;
+        hud.newGame();
+        newLevel();
+    }
+
+    public void newLevel() {
+        hud.nextLevel();
         Random rand = new Random();
-        for (int i = 0; i < level + 3; ++i) {
+        for (int i = 0; i < hud.getLevel() + 3; ++i) {
             int x, y;
             do {
                 x = rand.nextInt(CANVAS_WIDTH);
@@ -52,7 +54,7 @@ public class Handler implements Info {
 
     public void tick() {
         if (player == null) {
-            if (playerDeathTimer-- < 0) {
+            if (--playerDeathTimer == 0) {
                 if (hud.getNumLives() == 0) {
                     menu.endGame();
                 } else {
@@ -68,7 +70,7 @@ public class Handler implements Info {
         }
         if (newLevelTimer > 0) {
             if (--newLevelTimer == 0) {
-                newLevel(++level);
+                newLevel();
             }
         }
         shapes.forEach(shape -> shape.tick());
@@ -124,7 +126,10 @@ public class Handler implements Info {
     }
 
     public void render(Graphics g) {
-        if (player != null) {
+        shapes.forEach(shape -> shape.render(g));
+        if (player == null) {
+            destroyedPlayer.render(g);
+        } else {
             if (playerSaveTimer > 0) {
                 --playerSaveTimer;
                 if ((playerSaveTimer / PLAYER_FLASH_TIME) % 2 == 1) {
@@ -133,14 +138,14 @@ public class Handler implements Info {
             } else {
                 player.render(g);
             }
-        } else {
-            destroyedPlayer.render(g);
         }
-        shapes.forEach(shape -> shape.render(g));
     }
 
     public void addShape(Shape shape) {
         added.add(shape);
+        if (shape instanceof Bullet) {
+            fire.playSound();
+        }
     }
 
     public void removeShape(Shape shape) {
@@ -159,7 +164,7 @@ public class Handler implements Info {
                 hud.addToScore(SMALL_SCORE);
             }
         }
-        if (noAsteroids()) {
+        if (noAsteroids() && newLevelTimer == 0) {
             newLevelTimer = TIME_BETWEEN_LEVELS;
         }
     }
@@ -183,7 +188,6 @@ public class Handler implements Info {
         player = null;
         playerDeathTimer = PLAYER_RESPAWN_TIME;
         hud.loseALife();
-
     }
 
     public Player getPlayer() {
