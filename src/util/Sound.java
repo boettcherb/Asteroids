@@ -15,12 +15,20 @@ public class Sound {
         resetAudioStream();
     }
 
-    public void playSound() {
-        if (clip.isRunning()) {
-            clip.stop();
+    public void playSound(boolean loop) {
+        if (!(clip.isRunning() && loop)) {
+            resetAudioStream();
+            if (loop) {
+                clip.loop(Clip.LOOP_CONTINUOUSLY);
+            } else {
+                clip.start();
+            }
         }
+    }
+
+    public void endSound() {
+        clip.stop();
         resetAudioStream();
-        clip.start();
     }
 
     private void resetAudioStream() {

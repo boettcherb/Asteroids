@@ -123,4 +123,5 @@ public interface Info {
 
     // sounds
     String FIRE_SOUND_FILE = "fire.wav";
+    String THRUST_SOUND_FILE = "thrust.wav";
 }

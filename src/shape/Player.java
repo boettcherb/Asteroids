@@ -1,13 +1,17 @@
 package shape;
 
 import game_info.Info;
+import util.Sound;
 
 public class Player extends Shape implements Info {
     private float theta;
     private boolean accelerate, turnRight, turnLeft;
+    private Sound fire, thrust;
 
     public Player(int x, int y) {
         super(PLAYER_POINTS, x, y);
+        fire = new Sound(FIRE_SOUND_FILE);
+        thrust = new Sound(THRUST_SOUND_FILE);
     }
 
     public void tick() {
@@ -30,6 +34,7 @@ public class Player extends Shape implements Info {
     }
 
     public Bullet shoot() {
+        fire.playSound(false);
         float x = getX() + (float) Math.sin(theta) * BULLET_STARTING_DIST;
         float y = getY() - (float) Math.cos(theta) * BULLET_STARTING_DIST;
         return new Bullet(x, y, theta);
@@ -41,6 +46,11 @@ public class Player extends Shape implements Info {
 
     public void setAccelerate(boolean accelerate) {
         this.accelerate = accelerate;
+        if (accelerate) {
+            thrust.playSound(true);
+        } else {
+            thrust.endSound();
+        }
     }
 
     public void setTurnRight(boolean turnRight) {
@@ -49,5 +59,10 @@ public class Player extends Shape implements Info {
 
     public void setTurnLeft(boolean turnLeft) {
         this.turnLeft = turnLeft;
+    }
+
+    public void destruct() {
+        thrust.endSound();
+        fire.endSound();
     }
 }

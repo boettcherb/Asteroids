@@ -4,7 +4,6 @@ import game_info.Info;
 import shape.*;
 import util.Line;
 import util.Point;
-import util.Sound;
 
 import java.awt.Graphics;
 import java.util.LinkedList;
@@ -18,7 +17,6 @@ public class Handler implements Info {
     private Player player;
     private int playerDeathTimer, playerSaveTimer, newLevelTimer;
     private DestroyedPlayer destroyedPlayer;
-    private Sound fire;
 
     public Handler(HUD hud, Menu menu) {
         this.hud = hud;
@@ -26,7 +24,6 @@ public class Handler implements Info {
         shapes = new LinkedList<>();
         added = new LinkedList<>();
         removed = new LinkedList<>();
-        fire = new Sound(FIRE_SOUND_FILE);
     }
 
     public void newGame() {
@@ -143,9 +140,6 @@ public class Handler implements Info {
 
     public void addShape(Shape shape) {
         added.add(shape);
-        if (shape instanceof Bullet) {
-            fire.playSound();
-        }
     }
 
     public void removeShape(Shape shape) {
@@ -185,6 +179,7 @@ public class Handler implements Info {
 
     private void destroyPlayer() {
         destroyedPlayer = new DestroyedPlayer(player.getX(), player.getY());
+        player.destruct();
         player = null;
         playerDeathTimer = PLAYER_RESPAWN_TIME;
         hud.loseALife();
