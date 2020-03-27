@@ -3,10 +3,13 @@ package shape;
 import game_info.Info;
 import util.Sound;
 
+import java.util.Random;
+
 public class Player extends Shape implements Info {
     private float theta;
     private boolean accelerate, turnRight, turnLeft;
     private Sound fire, thrust;
+    private boolean showAcceleration;
 
     public Player(int x, int y) {
         super(PLAYER_POINTS, x, y);
@@ -31,6 +34,7 @@ public class Player extends Shape implements Info {
             rotate(-PLAYER_TURN_RATE);
         }
         translate(getVelX(), getVelY());
+        showAcceleration = new Random().nextFloat() < SHOW_THRUST_CHANCE;
     }
 
     public Bullet shoot() {
@@ -51,6 +55,10 @@ public class Player extends Shape implements Info {
         } else {
             thrust.endSound();
         }
+    }
+
+    public boolean showAcceleration() {
+        return showAcceleration;
     }
 
     public void setTurnRight(boolean turnRight) {

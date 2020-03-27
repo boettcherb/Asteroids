@@ -66,7 +66,8 @@ public interface Info {
     };
     int FIRST_AC_POINT = 3;
     int LAST_AC_POINT = 5;
-    float PLAYER_ACCELERATION = 0.12f;
+    float SHOW_THRUST_CHANCE = 0.7f;
+    float PLAYER_ACCELERATION = 0.14f;
     float PLAYER_DECELERATION = 0.984f;
     float MIN_VELOCITY = 0.1f;
     float PLAYER_TURN_RATE = 0.075f;
