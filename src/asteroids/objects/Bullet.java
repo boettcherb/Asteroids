@@ -28,6 +28,6 @@ public class Bullet extends Shape implements Info {
     }
 
     public boolean dead() {
-        return life < 0;
+        return life <= 0;
     }
 }

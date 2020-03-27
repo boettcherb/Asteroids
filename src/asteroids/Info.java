@@ -20,9 +20,9 @@ public interface Info {
 
     // menu particles
     Color MENU_PARTICLE_COLOR = Color.GRAY;
-    int NUM_PARTICLES = 1000;
-    int PARTICLE_SPEED = 3;
-    int MAX_PARTICLE_SIZE = 8;
+    int NUM_MENU_PARTICLES = 1000;
+    int MENU_PARTICLE_SPEED = 3;
+    int MAX_MENU_PARTICLE_SIZE = 8;
 
     // menu buttons
     Font BUTTON_FONT = new Font("arial", Font.PLAIN, 60);
@@ -120,6 +120,14 @@ public interface Info {
     int BULLET_LIFE = 50;
     int BULLET_STARTING_DIST = 30;
     int MAX_BULLET_PATH_LENGTH = 2 * BULLET_SPEED;
+
+    // debris particles
+    Point[] DEBRIS_PARTICLE_POINTS = {
+        new Point(0, 0), new Point(1, 0), new Point(1, 1), new Point(0, 1)
+    };
+    float MAX_DEBRIS_PARTICLE_SPEED = 6;
+    int NUM_DEBRIS_PARTICLES = 4;
+    int MAX_DEBRIS_PARTICLE_LIFE = 50;
 
     // sounds
     String FIRE_SOUND_FILE = "fire.wav";

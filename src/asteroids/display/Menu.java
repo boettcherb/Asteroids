@@ -22,7 +22,7 @@ public class Menu implements Info {
     public Menu(GUI gui) {
         this.gui = gui;
         menuState = MenuState.Start;
-        particles = new Particle[NUM_PARTICLES];
+        particles = new Particle[NUM_MENU_PARTICLES];
         for (int i = 0; i < particles.length; ++i) {
             particles[i] = new Particle();
         }
@@ -109,7 +109,7 @@ public class Menu implements Info {
         }
 
         private void tick() {
-            depth -= PARTICLE_SPEED;
+            depth -= MENU_PARTICLE_SPEED;
             if (depth < 1) {
                 reset();
             }
@@ -121,7 +121,7 @@ public class Menu implements Info {
             if (sx < 0 || sx > CANVAS_WIDTH || sy < 0 || sy > CANVAS_HEIGHT) {
                 reset();
             } else {
-                double size = map(depth, 0, CANVAS_WIDTH / 2.0, MAX_PARTICLE_SIZE, 0);
+                double size = map(depth, 0, CANVAS_WIDTH / 2.0, MAX_MENU_PARTICLE_SIZE, 0);
                 g.fillOval((int) sx, (int) sy, (int) size, (int) size);
             }
         }

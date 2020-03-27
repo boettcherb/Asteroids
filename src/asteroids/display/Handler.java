@@ -63,28 +63,20 @@ public class Handler implements Info {
             playerExplosion.tick();
         } else {
             player.tick();
-            checkPlayerCollisions();
         }
-        checkBulletCollisions();
+        checkBulletandParticleLives();
+        checkCollisions();
         resetLists();
     }
 
-    private void checkPlayerCollisions() {
-        if (playerSaveTimer <= 0) {
+    private void checkCollisions() {
+        if (player != null && playerSaveTimer <= 0) {
             for (Shape shape : shapes) {
                 if (shape instanceof Asteroid && player.intersects(shape)) {
                     destroyPlayer();
-                    removeShape(shape);
+                    removeShape(shape, true);
                     break;
                 }
-            }
-        }
-    }
-
-    private void checkBulletCollisions() {
-        for (Shape shape : shapes) {
-            if (shape instanceof Bullet && ((Bullet) shape).dead()) {
-                removeShape(shape);
             }
         }
         for (Shape shapeI : shapes) if (shapeI instanceof Bullet) {
@@ -93,10 +85,21 @@ public class Handler implements Info {
                 Asteroid asteroid = (Asteroid) shapeJ;
                 Line path = bullet.getPath();
                 if (asteroid.intersects(bullet) || (path.length() < MAX_BULLET_PATH_LENGTH && asteroid.intersects(path))) {
-                    removeShape(bullet);
-                    removeShape(asteroid);
+                    removeShape(bullet, false);
+                    removeShape(asteroid, true);
                     break;
                 }
+            }
+        }
+    }
+
+    private void checkBulletandParticleLives() {
+        for (Shape shape : shapes) {
+            if (shape instanceof Bullet && ((Bullet) shape).dead()) {
+                removeShape(shape, false);
+            }
+            if (shape instanceof DebrisParticle && ((DebrisParticle) shape).dead()) {
+                removeShape(shape, false);
             }
         }
     }
@@ -162,7 +165,14 @@ public class Handler implements Info {
         added.add(shape);
     }
 
-    public void removeShape(Shape shape) {
+    public void removeShape(Shape shape, boolean particles) {
+        if (particles) {
+            Random rand = new Random();
+            for (int i = 0; i < NUM_DEBRIS_PARTICLES; ++i) {
+                int life = rand.nextInt(MAX_DEBRIS_PARTICLE_LIFE);
+                addShape(new DebrisParticle(shape, life));
+            }
+        }
         removed.add(shape);
         if (shape instanceof Asteroid) {
             Asteroid asteroid = (Asteroid) shape;
@@ -198,6 +208,11 @@ public class Handler implements Info {
     }
 
     private void destroyPlayer() {
+        Random rand = new Random();
+        for (int i = 0; i < NUM_DEBRIS_PARTICLES; ++i) {
+            int life = rand.nextInt(MAX_DEBRIS_PARTICLE_LIFE);
+            addShape(new DebrisParticle(player, life));
+        }
         playerExplosion = new PlayerExplosion(player.getX(), player.getY());
         player.destruct();
         player = null;
