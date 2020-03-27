@@ -9,7 +9,7 @@ import java.awt.Rectangle;
 public interface Info {
     // general
     String GAME_TITLE = "ASTEROIDS";
-    String FRAME_TITLE = "Asteroids v2";
+    String FRAME_TITLE = "Asteroids v3";
     int MAX_FPS = 60;
     int CANVAS_WIDTH = 1000;
     int CANVAS_HEIGHT = 700;
@@ -124,4 +124,9 @@ public interface Info {
     // sounds
     String FIRE_SOUND_FILE = "fire.wav";
     String THRUST_SOUND_FILE = "thrust.wav";
+    String BEAT1_SOUND_FILE = "beat1.wav";
+    String BEAT2_SOUND_FILE = "beat2.wav";
+    int TIME_BETWEEN_BEATS = 70;
+    int MIN_TIME_BETWEEN_BEATS = 25;
+    int INC_TIME = 1000;
 }

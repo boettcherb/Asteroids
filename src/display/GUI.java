@@ -2,6 +2,7 @@ package display;
 
 import game_info.Info;
 import user_input.*;
+import util.Sound;
 
 import java.awt.Canvas;
 import java.awt.Graphics;
@@ -23,6 +24,7 @@ public class GUI extends Canvas implements Runnable, Info {
         handler = new Handler(hud, menu);
         addMouseListener(new MouseInput(menu));
         addKeyListener(new KeyInput(this, handler));
+        Sound.initialize();
         createBufferStrategy(3);
         requestFocus();
     }

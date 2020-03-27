@@ -1,12 +1,14 @@
 package util;
 
+import game_info.Info;
+
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.sound.sampled.Clip;
 import java.io.IOException;
 
-public class Sound {
+public class Sound implements Info {
     String fileName;
     Clip clip;
 
@@ -38,5 +40,15 @@ public class Sound {
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             e.printStackTrace();
         }
+    }
+
+    private void playLast() {
+        clip.setFramePosition(clip.getFrameLength() - 1);
+        clip.start();
+    }
+
+    public static void initialize() {
+        Sound init = new Sound(BEAT1_SOUND_FILE);
+        init.playLast();
     }
 }

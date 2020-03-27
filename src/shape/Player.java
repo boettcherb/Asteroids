@@ -63,6 +63,5 @@ public class Player extends Shape implements Info {
 
     public void destruct() {
         thrust.endSound();
-        fire.endSound();
     }
 }

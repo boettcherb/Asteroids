@@ -4,19 +4,22 @@ import game_info.Info;
 import shape.*;
 import util.Line;
 import util.Point;
+import util.Sound;
 
 import java.awt.Graphics;
 import java.util.LinkedList;
 import java.util.Random;
 
 public class Handler implements Info {
-    private LinkedList<Shape> shapes;
-    private LinkedList<Shape> added, removed;
+    private LinkedList<Shape> shapes, added, removed;
     private HUD hud;
     private Menu menu;
     private Player player;
-    private int playerDeathTimer, playerSaveTimer, newLevelTimer;
+    private int playerDeathTimer, playerSaveTimer, newLevelTimer, musicTimer;
     private DestroyedPlayer destroyedPlayer;
+    private Sound beat1, beat2;
+    private long levelStartTime;
+    private boolean firstBeat;
 
     public Handler(HUD hud, Menu menu) {
         this.hud = hud;
@@ -24,6 +27,9 @@ public class Handler implements Info {
         shapes = new LinkedList<>();
         added = new LinkedList<>();
         removed = new LinkedList<>();
+        beat1 = new Sound(BEAT1_SOUND_FILE);
+        beat2 = new Sound(BEAT2_SOUND_FILE);
+        firstBeat = true;
     }
 
     public void newGame() {
@@ -36,7 +42,8 @@ public class Handler implements Info {
         newLevel();
     }
 
-    public void newLevel() {
+    private void newLevel() {
+        levelStartTime = System.currentTimeMillis();
         hud.nextLevel();
         Random rand = new Random();
         for (int i = 0; i < hud.getLevel() + 3; ++i) {
@@ -47,6 +54,7 @@ public class Handler implements Info {
             } while (new Point(x, y).distTo(new Point(player.getX(), player.getY())) < MIN_SPAWN_DIST_FROM_PLAYER);
             addShape(new Asteroid(x, y, Asteroid.AsteroidType.Large));
         }
+        musicTimer = 0;
     }
 
     public void tick() {
@@ -118,7 +126,7 @@ public class Handler implements Info {
 
     private void manageTimers() {
         if (player == null) {
-            if (--playerDeathTimer == 0) {
+            if (--playerDeathTimer <= 0) {
                 if (hud.getNumLives() == 0) {
                     menu.endGame();
                 } else {
@@ -132,9 +140,22 @@ public class Handler implements Info {
             }
         }
         if (newLevelTimer > 0) {
-            if (--newLevelTimer == 0) {
+            if (--newLevelTimer <= 0) {
                 newLevel();
             }
+        }
+        // play music when the timer runs out, but not when a new level is about to start
+        if (--musicTimer <= 0 && newLevelTimer <= 0) {
+            if (firstBeat) {
+                beat1.playSound(false);
+            } else {
+                beat2.playSound(false);
+            }
+            firstBeat = !firstBeat;
+            // decrease the time between beats (increase the speed of the music) every INC_TIME milliseconds
+            musicTimer = TIME_BETWEEN_BEATS - (int) ((System.currentTimeMillis() - levelStartTime) / INC_TIME);
+            // make sure the time between beats can't get too low
+            musicTimer = Math.max(musicTimer, MIN_TIME_BETWEEN_BEATS);
         }
     }
 
