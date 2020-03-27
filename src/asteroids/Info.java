@@ -1,7 +1,6 @@
-package game_info;
+package asteroids;
 
-import util.Point;
-
+import asteroids.util.Point;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Rectangle;

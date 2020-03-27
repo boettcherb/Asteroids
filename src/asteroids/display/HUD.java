@@ -1,8 +1,7 @@
-package display;
+package asteroids.display;
 
-import game_info.Info;
-import shape.Player;
-
+import asteroids.Info;
+import asteroids.objects.Player;
 import java.awt.Graphics;
 
 public class HUD implements Info {

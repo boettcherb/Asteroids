@@ -1,7 +1,6 @@
-package util;
+package asteroids.util;
 
-import game_info.Info;
-
+import asteroids.Info;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;

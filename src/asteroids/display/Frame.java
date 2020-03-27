@@ -1,7 +1,6 @@
-package display;
+package asteroids.display;
 
-import game_info.Info;
-
+import asteroids.Info;
 import javax.swing.JFrame;
 import java.awt.Dimension;
 

@@ -1,9 +1,8 @@
-package display;
+package asteroids.display;
 
-import game_info.Info;
-import user_input.*;
-import util.Sound;
-
+import asteroids.Info;
+import asteroids.user_input.*;
+import asteroids.util.Sound;
 import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;

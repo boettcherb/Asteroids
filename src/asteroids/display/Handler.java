@@ -1,11 +1,10 @@
-package display;
+package asteroids.display;
 
-import game_info.Info;
-import shape.*;
-import util.Line;
-import util.Point;
-import util.Sound;
-
+import asteroids.Info;
+import asteroids.objects.*;
+import asteroids.util.Line;
+import asteroids.util.Point;
+import asteroids.util.Sound;
 import java.awt.Graphics;
 import java.util.LinkedList;
 import java.util.Random;
@@ -16,7 +15,7 @@ public class Handler implements Info {
     private Menu menu;
     private Player player;
     private int playerDeathTimer, playerSaveTimer, newLevelTimer, musicTimer;
-    private DestroyedPlayer destroyedPlayer;
+    private PlayerExplosion playerExplosion;
     private Sound beat1, beat2;
     private long levelStartTime;
     private boolean firstBeat;
@@ -61,7 +60,7 @@ public class Handler implements Info {
         shapes.forEach(shape -> shape.tick());
         manageTimers();
         if (player == null) {
-            destroyedPlayer.tick();
+            playerExplosion.tick();
         } else {
             player.tick();
             checkPlayerCollisions();
@@ -116,7 +115,7 @@ public class Handler implements Info {
     public void render(Graphics g) {
         shapes.forEach(shape -> shape.render(g));
         if (player == null) {
-            destroyedPlayer.render(g);
+            playerExplosion.render(g);
         } else {
             if (playerSaveTimer == 0 || (playerSaveTimer / PLAYER_FLASH_TIME) % 2 == 0) {
                 player.render(g);
@@ -199,7 +198,7 @@ public class Handler implements Info {
     }
 
     private void destroyPlayer() {
-        destroyedPlayer = new DestroyedPlayer(player.getX(), player.getY());
+        playerExplosion = new PlayerExplosion(player.getX(), player.getY());
         player.destruct();
         player = null;
         playerDeathTimer = PLAYER_RESPAWN_TIME;

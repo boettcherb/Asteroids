@@ -1,17 +1,16 @@
-package shape;
+package asteroids.objects;
 
-import game_info.Info;
-import util.Line;
-import util.Point;
-
+import asteroids.Info;
+import asteroids.util.Line;
+import asteroids.util.Point;
 import java.awt.*;
 import java.util.Random;
 
-public class DestroyedPlayer implements Info {
+public class PlayerExplosion implements Info {
     private Line[] lines;
     private float[][] speeds;
 
-    public DestroyedPlayer(float X, float Y) {
+    public PlayerExplosion(float X, float Y) {
         Random rand = new Random();
         lines = new Line[NUM_LINES];
         int lineIndex = 0;

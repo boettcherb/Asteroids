@@ -1,9 +1,8 @@
-package display;
+package asteroids.display;
 
-import game_info.Info;
-import util.Button;
-import util.InputReader;
-
+import asteroids.Info;
+import asteroids.util.Button;
+import asteroids.util.InputReader;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.util.Random;

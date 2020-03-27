@@ -1,4 +1,4 @@
-package util;
+package asteroids.util;
 
 public class Line {
     private final Point p1, p2;

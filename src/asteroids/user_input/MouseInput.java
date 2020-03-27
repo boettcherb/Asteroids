@@ -1,7 +1,6 @@
-package user_input;
+package asteroids.user_input;
 
-import display.Menu;
-
+import asteroids.display.Menu;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 

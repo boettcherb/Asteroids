@@ -1,7 +1,6 @@
-package util;
+package asteroids.util;
 
-import game_info.Info;
-
+import asteroids.Info;
 import java.awt.Graphics;
 import java.awt.Font;
 import java.awt.FontMetrics;

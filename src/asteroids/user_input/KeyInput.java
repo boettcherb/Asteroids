@@ -1,9 +1,8 @@
-package user_input;
+package asteroids.user_input;
 
-import display.GUI;
-import display.Handler;
-import shape.Player;
-
+import asteroids.display.GUI;
+import asteroids.display.Handler;
+import asteroids.objects.Player;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 

@@ -1,7 +1,6 @@
-package shape;
+package asteroids.objects;
 
-import game_info.Info;
-
+import asteroids.Info;
 import java.util.Random;
 
 public class Asteroid extends Shape implements Info {

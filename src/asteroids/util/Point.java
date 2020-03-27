@@ -1,4 +1,4 @@
-package util;
+package asteroids.util;
 
 public class Point {
     private float X, Y;

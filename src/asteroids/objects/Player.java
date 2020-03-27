@@ -1,8 +1,7 @@
-package shape;
+package asteroids.objects;
 
-import game_info.Info;
-import util.Sound;
-
+import asteroids.Info;
+import asteroids.util.Sound;
 import java.util.Random;
 
 public class Player extends Shape implements Info {

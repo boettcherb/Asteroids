@@ -1,8 +1,8 @@
-package shape;
+package asteroids.objects;
 
-import game_info.Info;
-import util.Point;
-import util.Line;
+import asteroids.Info;
+import asteroids.util.Point;
+import asteroids.util.Line;
 
 public class Bullet extends Shape implements Info {
     private int life;
