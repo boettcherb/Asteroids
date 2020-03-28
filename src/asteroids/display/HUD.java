@@ -41,6 +41,9 @@ public class HUD implements Info {
     }
 
     public void addToScore(int val) {
+        if (score % EXTRA_LIFE_SCORE > (score + val) % EXTRA_LIFE_SCORE) {
+            ++numLives;
+        }
         score += val;
     }
 
