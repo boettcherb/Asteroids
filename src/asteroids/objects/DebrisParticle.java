@@ -22,4 +22,6 @@ public class DebrisParticle extends Shape implements Info {
     public boolean dead() {
         return life <= 0;
     }
+
+    public void destruct() {}
 }

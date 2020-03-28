@@ -8,7 +8,7 @@ public class UFO extends Shape implements Info {
     private UFO_Type type;
     private Random rand;
     private int turnTimer;
-    Sound ufoSound;
+    Sound explosion, music;
 
     public enum UFO_Type {
         LARGE,
@@ -24,8 +24,9 @@ public class UFO extends Shape implements Info {
         } else {
             type = UFO_Type.LARGE;
         }
-        ufoSound = new Sound(type == UFO_Type.LARGE ? LARGE_UFO_SOUND_FILE : SMALL_UFO_SOUND_FILE);
-        ufoSound.playSound(true);
+        explosion = new Sound(type == UFO_Type.LARGE ? LARGE_EXPLOSION_SOUND_FILE : SMALL_EXPLOSION_SOUND_FILE);
+        music = new Sound(type == UFO_Type.LARGE ? LARGE_UFO_SOUND_FILE : SMALL_UFO_SOUND_FILE);
+        music.playSound(true);
         setVelX(x == 0 ? UFO_SPEED : -UFO_SPEED);
     }
 
@@ -47,6 +48,7 @@ public class UFO extends Shape implements Info {
     }
 
     public void destruct() {
-        ufoSound.endSound();
+        explosion.playSound(false);
+        music.endSound();
     }
 }

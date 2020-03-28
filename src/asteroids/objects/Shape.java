@@ -66,6 +66,7 @@ public abstract class Shape implements Info {
         }
     }
 
+    public abstract void destruct();
     public abstract void tick();
 
     public void render(Graphics g) {

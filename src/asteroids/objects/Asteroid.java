@@ -1,10 +1,12 @@
 package asteroids.objects;
 
 import asteroids.Info;
+import asteroids.util.Sound;
 import java.util.Random;
 
 public class Asteroid extends Shape implements Info {
     private AsteroidType type;
+    private Sound explosion;
 
     public enum AsteroidType {
         Large,
@@ -21,12 +23,15 @@ public class Asteroid extends Shape implements Info {
         if (type == AsteroidType.Large) {
             speed = LARGE_ASTEROID_SPEED;
             scale(0.8f);
+            explosion = new Sound(LARGE_EXPLOSION_SOUND_FILE);
         } else if (type == AsteroidType.Medium) {
             speed = rand.nextFloat() * MAX_MEDIUM_ASTEROID_SPEED + MIN_ASTEROID_SPEED;
             scale(0.4f);
+            explosion = new Sound(MEDIUM_EXPLOSION_SOUND_FILE);
         } else {
             speed = rand.nextFloat() * MAX_SMALL_ASTEROID_SPEED + MIN_ASTEROID_SPEED;
             scale(0.20f);
+            explosion = new Sound(SMALL_EXPLOSION_SOUND_FILE);
         }
         setVelX((float) Math.cos(theta) * speed);
         setVelY((float) -Math.sin(theta) * speed);
@@ -38,5 +43,9 @@ public class Asteroid extends Shape implements Info {
 
     public AsteroidType getType() {
         return type;
+    }
+
+    public void destruct() {
+        explosion.playSound(false);
     }
 }

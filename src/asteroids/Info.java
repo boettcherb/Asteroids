@@ -13,6 +13,7 @@ public interface Info {
     int CANVAS_WIDTH = 1000;
     int CANVAS_HEIGHT = 700;
     int TIME_BETWEEN_LEVELS = 100;
+    int EXTRA_LIFE_SCORE = 10000;
 
     // game colors
     Color BACKGROUND_COLOR = Color.BLACK;
@@ -60,7 +61,7 @@ public interface Info {
     // player / player movement
     Point[] PLAYER_POINTS = {
         new Point(0, -30), new Point(-15, 15), new Point(-12, 7),
-        new Point(-5, 7), new Point(0, 18), new Point(5, 7),
+        new Point(-6, 7), new Point(0, 20), new Point(6, 7),
         new Point(-5, 7), new Point(12, 7), new Point(15, 15)
     };
     int FIRST_AC_POINT = 3;
@@ -152,4 +153,7 @@ public interface Info {
     int INC_TIME = 100;
     String LARGE_UFO_SOUND_FILE = "saucerBig.wav";
     String SMALL_UFO_SOUND_FILE = "saucerSmall.wav";
+    String LARGE_EXPLOSION_SOUND_FILE = "bangLarge.wav";
+    String MEDIUM_EXPLOSION_SOUND_FILE = "bangMedium.wav";
+    String SMALL_EXPLOSION_SOUND_FILE = "bangSmall.wav";
 }
