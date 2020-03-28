@@ -1,12 +1,14 @@
 package asteroids.objects;
 
 import asteroids.Info;
+import asteroids.util.Sound;
 import java.util.Random;
 
 public class UFO extends Shape implements Info {
     private UFO_Type type;
     private Random rand;
-    private int turnTimer = 0;
+    private int turnTimer;
+    Sound ufoSound;
 
     public enum UFO_Type {
         LARGE,
@@ -22,17 +24,15 @@ public class UFO extends Shape implements Info {
         } else {
             type = UFO_Type.LARGE;
         }
+        ufoSound = new Sound(type == UFO_Type.LARGE ? LARGE_UFO_SOUND_FILE : SMALL_UFO_SOUND_FILE);
+        ufoSound.playSound(true);
         setVelX(x == 0 ? UFO_SPEED : -UFO_SPEED);
     }
 
     public void tick() {
         if (--turnTimer <= 0) {
-            float Y = getY() / CANVAS_HEIGHT;
-            if (rand.nextFloat() > 1 / ((1 - Y) * (1 - Y) / (Y * Y))) {
-                setVelY(UFO_SPEED);
-            } else {
-                setVelY(-UFO_SPEED);
-            }
+            float val = rand.nextFloat();
+            setVelY(val < 0.25 ? -UFO_SPEED : val >= 0.75 ? UFO_SPEED : 0);
             turnTimer = UFO_TURN_TIMER;
         }
         translate(getVelX(), getVelY());
@@ -44,5 +44,9 @@ public class UFO extends Shape implements Info {
 
     public UFO_Type getType() {
         return type;
+    }
+
+    public void destruct() {
+        ufoSound.endSound();
     }
 }

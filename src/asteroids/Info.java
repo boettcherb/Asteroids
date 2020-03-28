@@ -140,7 +140,7 @@ public interface Info {
     int LARGE_UFO_SCORE = 200;
     int UFO_SPEED = 2;
     int UFO_TURN_TIMER = 40;
-    float UFO_SPAWN_CHANCE = 0.000001f;
+    float UFO_SPAWN_CHANCE = 0.0000005f;
 
     // sounds
     String FIRE_SOUND_FILE = "fire.wav";
@@ -150,4 +150,6 @@ public interface Info {
     int TIME_BETWEEN_BEATS = 70;
     int MIN_TIME_BETWEEN_BEATS = 25;
     int INC_TIME = 100;
+    String LARGE_UFO_SOUND_FILE = "saucerBig.wav";
+    String SMALL_UFO_SOUND_FILE = "saucerSmall.wav";
 }

@@ -202,13 +202,13 @@ public class Handler implements Info {
     }
 
     public void removeShape(Shape shape, boolean particles, boolean score) {
+        removed.add(shape);
         if (particles) {
             for (int i = 0; i < NUM_DEBRIS_PARTICLES; ++i) {
                 int life = rand.nextInt(MAX_DEBRIS_PARTICLE_LIFE);
                 addShape(new DebrisParticle(shape, life));
             }
         }
-        removed.add(shape);
         if (shape instanceof Asteroid) {
             Asteroid asteroid = (Asteroid) shape;
             if (asteroid.getType() == Asteroid.AsteroidType.Large) {
@@ -224,6 +224,7 @@ public class Handler implements Info {
             }
         } else if (shape instanceof UFO) {
             UFO ufo = (UFO) shape;
+            ufo.destruct();
             if (ufo.getType() == UFO.UFO_Type.LARGE) {
                 hud.addToScore(score ? LARGE_UFO_SCORE : 0);
             } else {
