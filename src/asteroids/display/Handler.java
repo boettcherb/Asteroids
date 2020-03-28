@@ -11,18 +11,20 @@ import java.util.Random;
 
 public class Handler implements Info {
     private LinkedList<Shape> shapes, added, removed;
+    private Random rand;
     private HUD hud;
     private Menu menu;
     private Player player;
     private int playerDeathTimer, playerSaveTimer, newLevelTimer, musicTimer;
     private PlayerExplosion playerExplosion;
     private Sound beat1, beat2;
-    private long levelStartTime;
-    private boolean firstBeat;
+    private int ticks;
+    private boolean firstBeat, ufoInGame;
 
     public Handler(HUD hud, Menu menu) {
         this.hud = hud;
         this.menu = menu;
+        rand = new Random();
         shapes = new LinkedList<>();
         added = new LinkedList<>();
         removed = new LinkedList<>();
@@ -42,9 +44,8 @@ public class Handler implements Info {
     }
 
     private void newLevel() {
-        levelStartTime = System.currentTimeMillis();
+        ticks = 0;
         hud.nextLevel();
-        Random rand = new Random();
         for (int i = 0; i < hud.getLevel() + 3; ++i) {
             int x, y;
             do {
@@ -57,49 +58,84 @@ public class Handler implements Info {
     }
 
     public void tick() {
+        ++ticks;
         shapes.forEach(shape -> shape.tick());
+        float ufo_chance = ticks * UFO_SPAWN_CHANCE;
+        if (!ufoInGame && rand.nextFloat() < ufo_chance) {
+            addShape(new UFO(rand.nextBoolean() ? 0 : CANVAS_WIDTH, rand.nextInt(CANVAS_HEIGHT)));
+            ufoInGame = true;
+        }
         manageTimers();
         if (player == null) {
             playerExplosion.tick();
         } else {
             player.tick();
         }
-        checkBulletandParticleLives();
+        checkLives();
         checkCollisions();
         resetLists();
     }
 
     private void checkCollisions() {
+        // check player collisions
         if (player != null && playerSaveTimer <= 0) {
             for (Shape shape : shapes) {
-                if (shape instanceof Asteroid && player.intersects(shape)) {
+                if ((shape instanceof Asteroid || shape instanceof UFO) && player.intersects(shape)) {
                     destroyPlayer();
-                    removeShape(shape, true);
+                    removeShape(shape, true, false);
                     break;
                 }
             }
         }
+        // check bullet collisions
         for (Shape shapeI : shapes) if (shapeI instanceof Bullet) {
             Bullet bullet = (Bullet) shapeI;
+            Line path = bullet.getPath();
+            if (path.length() > MAX_BULLET_PATH_LENGTH) {
+                continue;
+            }
+            for (Shape shapeJ : shapes) {
+                if (shapeJ instanceof Asteroid) {
+                    Asteroid asteroid = (Asteroid) shapeJ;
+                    if (asteroid.intersects(bullet) || asteroid.intersects(path)) {
+                        removeShape(bullet, false, false);
+                        removeShape(asteroid, true, true);
+                        break;
+                    }
+                }
+                if (shapeJ instanceof UFO) {
+                    UFO ufo = (UFO) shapeJ;
+                    if (ufo.intersects(bullet) || ufo.intersects(path)) {
+                        removeShape(bullet, false, false);
+                        removeShape(ufo, true, true);
+                        break;
+                    }
+                }
+            }
+        }
+        // check UFO collisions with Asteroids
+        for (Shape shapeI : shapes) if (shapeI instanceof UFO) {
+            UFO ufo = (UFO) shapeI;
             for (Shape shapeJ : shapes) if (shapeJ instanceof Asteroid) {
                 Asteroid asteroid = (Asteroid) shapeJ;
-                Line path = bullet.getPath();
-                if (asteroid.intersects(bullet) || (path.length() < MAX_BULLET_PATH_LENGTH && asteroid.intersects(path))) {
-                    removeShape(bullet, false);
-                    removeShape(asteroid, true);
-                    break;
+                if (ufo.intersects(asteroid)) {
+                    removeShape(ufo, true, false);
+                    removeShape(asteroid, true, false);
                 }
             }
         }
     }
 
-    private void checkBulletandParticleLives() {
+    private void checkLives() {
         for (Shape shape : shapes) {
             if (shape instanceof Bullet && ((Bullet) shape).dead()) {
-                removeShape(shape, false);
+                removeShape(shape, false, false);
             }
             if (shape instanceof DebrisParticle && ((DebrisParticle) shape).dead()) {
-                removeShape(shape, false);
+                removeShape(shape, false, false);
+            }
+            if (shape instanceof UFO && ((UFO) shape).dead()) {
+                removeShape(shape, false, false);
             }
         }
     }
@@ -154,8 +190,8 @@ public class Handler implements Info {
                 beat2.playSound(false);
             }
             firstBeat = !firstBeat;
-            // decrease the time between beats (increase the speed of the music) every INC_TIME milliseconds
-            musicTimer = TIME_BETWEEN_BEATS - (int) ((System.currentTimeMillis() - levelStartTime) / INC_TIME);
+            // decrease the time between beats (increase the speed of the music) every INC_TIME ticks
+            musicTimer = TIME_BETWEEN_BEATS - ticks / INC_TIME;
             // make sure the time between beats can't get too low
             musicTimer = Math.max(musicTimer, MIN_TIME_BETWEEN_BEATS);
         }
@@ -165,9 +201,8 @@ public class Handler implements Info {
         added.add(shape);
     }
 
-    public void removeShape(Shape shape, boolean particles) {
+    public void removeShape(Shape shape, boolean particles, boolean score) {
         if (particles) {
-            Random rand = new Random();
             for (int i = 0; i < NUM_DEBRIS_PARTICLES; ++i) {
                 int life = rand.nextInt(MAX_DEBRIS_PARTICLE_LIFE);
                 addShape(new DebrisParticle(shape, life));
@@ -179,14 +214,22 @@ public class Handler implements Info {
             if (asteroid.getType() == Asteroid.AsteroidType.Large) {
                 addShape(new Asteroid(asteroid.getX(), asteroid.getY(), Asteroid.AsteroidType.Medium));
                 addShape(new Asteroid(asteroid.getX(), asteroid.getY(), Asteroid.AsteroidType.Medium));
-                hud.addToScore(LARGE_SCORE);
+                hud.addToScore(score ? LARGE_SCORE : 0);
             } else if (asteroid.getType() == Asteroid.AsteroidType.Medium) {
                 addShape(new Asteroid(asteroid.getX(), asteroid.getY(), Asteroid.AsteroidType.Small));
                 addShape(new Asteroid(asteroid.getX(), asteroid.getY(), Asteroid.AsteroidType.Small));
-                hud.addToScore(MEDIUM_SCORE);
+                hud.addToScore(score ? MEDIUM_SCORE : 0);
             } else {
-                hud.addToScore(SMALL_SCORE);
+                hud.addToScore(score ? SMALL_SCORE : 0);
             }
+        } else if (shape instanceof UFO) {
+            UFO ufo = (UFO) shape;
+            if (ufo.getType() == UFO.UFO_Type.LARGE) {
+                hud.addToScore(score ? LARGE_UFO_SCORE : 0);
+            } else {
+                hud.addToScore(score ? SMALL_UFO_SCORE : 0);
+            }
+            ufoInGame = false;
         }
         if (noAsteroids() && newLevelTimer == 0) {
             newLevelTimer = TIME_BETWEEN_LEVELS;
@@ -208,7 +251,6 @@ public class Handler implements Info {
     }
 
     private void destroyPlayer() {
-        Random rand = new Random();
         for (int i = 0; i < NUM_DEBRIS_PARTICLES; ++i) {
             int life = rand.nextInt(MAX_DEBRIS_PARTICLE_LIFE);
             addShape(new DebrisParticle(player, life));

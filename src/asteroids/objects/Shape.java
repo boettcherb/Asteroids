@@ -1,8 +1,8 @@
 package asteroids.objects;
 
+import asteroids.Info;
 import asteroids.util.Line;
 import asteroids.util.Point;
-import asteroids.Info;
 import java.awt.Graphics;
 
 public abstract class Shape implements Info {

@@ -54,7 +54,7 @@ public interface Info {
     int LIVES_Y = 30;
     int LIVES_DIST = 30;
     Font SCORE_FONT = new Font("arial", Font.PLAIN, 15);
-    int SCORE_X = 20;
+    int SCORE_X = 15;
     int SCORE_Y = CANVAS_HEIGHT - 50;
 
     // player / player movement
@@ -129,6 +129,19 @@ public interface Info {
     int NUM_DEBRIS_PARTICLES = 4;
     int MAX_DEBRIS_PARTICLE_LIFE = 50;
 
+    // UFOs
+    Point[] UFO_POINTS = {
+        new Point(-8, -25), new Point(-10, -12), new Point(-30, 0), new Point(-15, 10),
+        new Point(15, 10), new Point(30, 0), new Point(-30, 0), new Point(30, 0),
+        new Point(10, -12), new Point(-10, -12), new Point(10, -12), new Point(8, -25),
+    };
+    float SMALL_UFO_SCALE = 0.5f;
+    int SMALL_UFO_SCORE = 1000;
+    int LARGE_UFO_SCORE = 200;
+    int UFO_SPEED = 2;
+    int UFO_TURN_TIMER = 40;
+    float UFO_SPAWN_CHANCE = 0.000001f;
+
     // sounds
     String FIRE_SOUND_FILE = "fire.wav";
     String THRUST_SOUND_FILE = "thrust.wav";
@@ -136,5 +149,5 @@ public interface Info {
     String BEAT2_SOUND_FILE = "beat2.wav";
     int TIME_BETWEEN_BEATS = 70;
     int MIN_TIME_BETWEEN_BEATS = 25;
-    int INC_TIME = 1000;
+    int INC_TIME = 100;
 }
