@@ -9,12 +9,18 @@ public interface Info {
     // general
     String GAME_TITLE = "ASTEROIDS";
     String FRAME_TITLE = "Asteroids v3";
+
     int MAX_FPS = 60;
     int CANVAS_WIDTH = 1000;
     int CANVAS_HEIGHT = 700;
     int TIME_BETWEEN_LEVELS = 100;
     int EXTRA_LIFE_SCORE = 10000;
     float EPSILON = 1e-6f;
+
+    // high score
+    String HIGH_SCORE_FILE = "HighScore.txt";
+    Rectangle HIGH_SCORE_RECT = new Rectangle(20, 600, 200, 40);
+    Font HIGH_SCORE_FONT = new Font("arial", Font.BOLD, 20);
 
     // game colors
     Color BACKGROUND_COLOR = Color.BLACK;

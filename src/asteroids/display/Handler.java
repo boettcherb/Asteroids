@@ -172,7 +172,7 @@ public class Handler implements Info {
             if (--playerDeathTimer <= 0) {
                 if (hud.getNumLives() == 0) {
                     clearAll();
-                    menu.endGame();
+                    menu.endGame(hud.getScore());
                 } else {
                     player = new Player(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
                     playerSaveTimer = PLAYER_SAVE_TIME;

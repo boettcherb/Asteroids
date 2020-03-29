@@ -47,6 +47,10 @@ public class HUD implements Info {
         score += val;
     }
 
+    public int getScore() {
+        return score;
+    }
+
     public void loseALife() {
         --numLives;
     }

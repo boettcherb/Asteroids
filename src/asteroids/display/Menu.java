@@ -3,8 +3,9 @@ package asteroids.display;
 import asteroids.Info;
 import asteroids.util.Button;
 import asteroids.util.InputReader;
-import java.awt.Graphics;
-import java.awt.Point;
+import asteroids.util.Writer;
+
+import java.awt.*;
 import java.util.Random;
 
 public class Menu implements Info {
@@ -70,24 +71,36 @@ public class Menu implements Info {
 
     private void renderStart(Graphics g) {
         Button.drawCenteredString(g, GAME_TITLE, TITLE_RECT, TITLE_FONT);
+        Button.drawCenteredString(g, "High Score: " + getCurrentHighScore(), HIGH_SCORE_RECT, HIGH_SCORE_FONT);
         play.draw(g);
         help.draw(g);
         quit.draw(g);
+
     }
 
     private void renderHelp(Graphics g) {
         g.setFont(HELP_TEXT_FONT);
         InputReader inputReader = new InputReader(HELP_TEXT_FILE);
         int line = 0;
-        while (inputReader.hasNextLine()) {
+        while (inputReader.hasNext()) {
             g.drawString(inputReader.nextLine(), HELP_TEXT_X, HELP_TEXT_Y + line * LINE_SPACE);
             ++line;
         }
         back.draw(g);
     }
 
-    public void endGame() {
+    public void endGame(int finalScore) {
+        if (finalScore > getCurrentHighScore()) {
+            Writer writer = new Writer(HIGH_SCORE_FILE);
+            writer.write(finalScore);
+            writer.close();
+        }
         gui.setPlaying(false);
+    }
+
+    private int getCurrentHighScore() {
+        InputReader in = new InputReader(HIGH_SCORE_FILE);
+        return in.hasNext() ? in.nextInt() : 0;
     }
 
     public void setStartMenu() {
