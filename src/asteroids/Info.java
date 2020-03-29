@@ -14,6 +14,7 @@ public interface Info {
     int CANVAS_HEIGHT = 700;
     int TIME_BETWEEN_LEVELS = 100;
     int EXTRA_LIFE_SCORE = 10000;
+    float EPSILON = 1e-6f;
 
     // game colors
     Color BACKGROUND_COLOR = Color.BLACK;
@@ -141,6 +142,7 @@ public interface Info {
     int LARGE_UFO_SCORE = 200;
     int UFO_SPEED = 2;
     int UFO_TURN_TIMER = 40;
+    int UFO_SHOOT_TIMER = 70;
     float UFO_SPAWN_CHANCE = 0.0000005f;
 
     // sounds

@@ -30,13 +30,10 @@ public class Handler implements Info {
         removed = new LinkedList<>();
         beat1 = new Sound(BEAT1_SOUND_FILE);
         beat2 = new Sound(BEAT2_SOUND_FILE);
-        firstBeat = true;
     }
 
     public void newGame() {
-        shapes.clear();
-        added.clear();
-        removed.clear();
+        clearAll();
         player = new Player(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
         playerSaveTimer = PLAYER_SAVE_TIME;
         hud.newGame();
@@ -44,6 +41,9 @@ public class Handler implements Info {
     }
 
     private void newLevel() {
+        if (player == null) {
+            player = new Player(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
+        }
         ticks = 0;
         hud.nextLevel();
         for (int i = 0; i < hud.getLevel() + 3; ++i) {
@@ -55,6 +55,7 @@ public class Handler implements Info {
             addShape(new Asteroid(x, y, Asteroid.AsteroidType.Large));
         }
         musicTimer = 0;
+        firstBeat = true;
     }
 
     public void tick() {
@@ -62,7 +63,7 @@ public class Handler implements Info {
         shapes.forEach(shape -> shape.tick());
         float ufo_chance = ticks * UFO_SPAWN_CHANCE;
         if (!ufoInGame && rand.nextFloat() < ufo_chance) {
-            addShape(new UFO(rand.nextBoolean() ? 0 : CANVAS_WIDTH, rand.nextInt(CANVAS_HEIGHT)));
+            addShape(new UFO(rand.nextBoolean() ? 0 : CANVAS_WIDTH, rand.nextInt(CANVAS_HEIGHT), this));
             ufoInGame = true;
         }
         manageTimers();
@@ -80,20 +81,24 @@ public class Handler implements Info {
         // check player collisions
         if (player != null && playerSaveTimer <= 0) {
             for (Shape shape : shapes) {
-                if ((shape instanceof Asteroid || shape instanceof UFO) && player.intersects(shape)) {
+                if (shape instanceof Bullet) {
+                    Bullet bullet = (Bullet) shape;
+                    if ((player.intersects(bullet) || player.intersects(bullet.getPath())) && bullet.isUFOBullet()) {
+                        destroyPlayer();
+                        removeShape(shape, false, false);
+                    }
+                } else if ((shape instanceof Asteroid || shape instanceof UFO) && player.intersects(shape)) {
                     destroyPlayer();
                     removeShape(shape, true, false);
-                    break;
                 }
+                if (player == null) break;
             }
         }
         // check bullet collisions
         for (Shape shapeI : shapes) if (shapeI instanceof Bullet) {
             Bullet bullet = (Bullet) shapeI;
             Line path = bullet.getPath();
-            if (path.length() > MAX_BULLET_PATH_LENGTH) {
-                continue;
-            }
+            if (path.length() > MAX_BULLET_PATH_LENGTH) continue;
             for (Shape shapeJ : shapes) {
                 if (shapeJ instanceof Asteroid) {
                     Asteroid asteroid = (Asteroid) shapeJ;
@@ -103,7 +108,7 @@ public class Handler implements Info {
                         break;
                     }
                 }
-                if (shapeJ instanceof UFO) {
+                if (shapeJ instanceof UFO && !bullet.isUFOBullet()) {
                     UFO ufo = (UFO) shapeJ;
                     if (ufo.intersects(bullet) || ufo.intersects(path)) {
                         removeShape(bullet, false, false);
@@ -166,6 +171,7 @@ public class Handler implements Info {
         if (player == null) {
             if (--playerDeathTimer <= 0) {
                 if (hud.getNumLives() == 0) {
+                    clearAll();
                     menu.endGame();
                 } else {
                     player = new Player(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
@@ -203,7 +209,7 @@ public class Handler implements Info {
 
     public void removeShape(Shape shape, boolean particles, boolean score) {
         removed.add(shape);
-        shape.destruct();
+        shape.destruct(true);
         if (particles) {
             for (int i = 0; i < NUM_DEBRIS_PARTICLES; ++i) {
                 int life = rand.nextInt(MAX_DEBRIS_PARTICLE_LIFE);
@@ -257,7 +263,7 @@ public class Handler implements Info {
             addShape(new DebrisParticle(player, life));
         }
         playerExplosion = new PlayerExplosion(player.getX(), player.getY());
-        player.destruct();
+        player.destruct(false);
         player = null;
         playerDeathTimer = PLAYER_RESPAWN_TIME;
         hud.loseALife();
@@ -265,5 +271,20 @@ public class Handler implements Info {
 
     public Player getPlayer() {
         return player;
+    }
+
+    private void clearAll() {
+        for (Shape shape : shapes) {
+            shape.destruct(false);
+        }
+        for (Shape shape : added) {
+            shape.destruct(false);
+        }
+        for (Shape shape : removed) {
+            shape.destruct(false);
+        }
+        shapes.clear();
+        added.clear();
+        removed.clear();
     }
 }

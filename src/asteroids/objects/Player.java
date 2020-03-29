@@ -40,7 +40,7 @@ public class Player extends Shape implements Info {
         fire.playSound(false);
         float x = getX() + (float) Math.sin(theta) * BULLET_STARTING_DIST;
         float y = getY() - (float) Math.cos(theta) * BULLET_STARTING_DIST;
-        return new Bullet(x, y, theta);
+        return new Bullet(x, y, theta, Bullet.BulletType.PLAYER_BULLET);
     }
 
     public boolean isAccelerating() {
@@ -68,7 +68,7 @@ public class Player extends Shape implements Info {
         this.turnLeft = turnLeft;
     }
 
-    public void destruct() {
+    public void destruct(boolean play) {
         thrust.endSound();
     }
 }

@@ -45,7 +45,9 @@ public class Asteroid extends Shape implements Info {
         return type;
     }
 
-    public void destruct() {
-        explosion.playSound(false);
+    public void destruct(boolean play) {
+        if (play) {
+            explosion.playSound(false);
+        }
     }
 }

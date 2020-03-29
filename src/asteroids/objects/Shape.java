@@ -66,7 +66,7 @@ public abstract class Shape implements Info {
         }
     }
 
-    public abstract void destruct();
+    public abstract void destruct(boolean play);
     public abstract void tick();
 
     public void render(Graphics g) {
@@ -93,7 +93,7 @@ public abstract class Shape implements Info {
             float dx = point.getX() - X; // x-dist from center
             float dy = point.getY() - Y; // y-dist from center
             if (dx == 0) {
-                dx += 1e-6; // prevent divide by zero
+                dx = EPSILON; // prevent divide by zero
             }
             double theta;
             if (dy >= 0) {
