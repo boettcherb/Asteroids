@@ -9,7 +9,6 @@ public interface Info {
     // general
     String GAME_TITLE = "ASTEROIDS";
     String FRAME_TITLE = "Asteroids v3";
-
     int MAX_FPS = 60;
     int CANVAS_WIDTH = 1000;
     int CANVAS_HEIGHT = 700;
@@ -80,7 +79,7 @@ public interface Info {
     float PLAYER_TURN_RATE = 0.075f;
     int PLAYER_RESPAWN_TIME = 150;
     int PLAYER_SAVE_TIME = 150;
-    int PLAYER_FLASH_TIME = 10;
+    int PLAYER_FLASH_TIME = 8;
 
     // destroyed player lines
     int NUM_LINES = 4;
@@ -158,7 +157,7 @@ public interface Info {
     String BEAT2_SOUND_FILE = "beat2.wav";
     int TIME_BETWEEN_BEATS = 70;
     int MIN_TIME_BETWEEN_BEATS = 25;
-    int INC_TIME = 100;
+    int INC_TIME = 90;
     String LARGE_UFO_SOUND_FILE = "saucerBig.wav";
     String SMALL_UFO_SOUND_FILE = "saucerSmall.wav";
     String LARGE_EXPLOSION_SOUND_FILE = "bangLarge.wav";
