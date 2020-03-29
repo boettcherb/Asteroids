@@ -3,9 +3,9 @@ package asteroids.display;
 import asteroids.Info;
 import asteroids.util.Button;
 import asteroids.util.InputReader;
-import asteroids.util.Writer;
-
-import java.awt.*;
+import java.util.prefs.Preferences;
+import java.awt.Graphics;
+import java.awt.Point;
 import java.util.Random;
 
 public class Menu implements Info {
@@ -13,6 +13,7 @@ public class Menu implements Info {
     private MenuState menuState;
     private final Particle[] particles;
     private final Button play, help, quit, back;
+    private Preferences prefs;
 
     private enum MenuState {
         Start,
@@ -31,6 +32,8 @@ public class Menu implements Info {
         help = new Button(HELP_BUTTON_TEXT, HELP_BUTTON_HEIGHT);
         quit = new Button(QUIT_BUTTON_TEXT, QUIT_BUTTON_HEIGHT);
         back = new Button(BACK_BUTTON_TEXT, BACK_BUTTON_HEIGHT);
+        prefs = Preferences.userRoot().node(this.getClass().getName());
+        prefs.putInt("HIGH_SCORE", 0);
     }
 
     public void click(Point point) {
@@ -91,16 +94,13 @@ public class Menu implements Info {
 
     public void endGame(int finalScore) {
         if (finalScore > getCurrentHighScore()) {
-            Writer writer = new Writer(HIGH_SCORE_FILE);
-            writer.write(finalScore);
-            writer.close();
+            prefs.putInt(HIGH_SCORE, finalScore);
         }
         gui.setPlaying(false);
     }
 
     private int getCurrentHighScore() {
-        InputReader in = new InputReader(HIGH_SCORE_FILE);
-        return in.hasNext() ? in.nextInt() : 0;
+        return prefs.getInt(HIGH_SCORE, 0);
     }
 
     public void setStartMenu() {

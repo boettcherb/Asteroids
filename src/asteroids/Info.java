@@ -17,7 +17,7 @@ public interface Info {
     float EPSILON = 1e-6f;
 
     // high score
-    String HIGH_SCORE_FILE = "HighScore.txt";
+    String HIGH_SCORE = "HIGH_SCORE";
     Rectangle HIGH_SCORE_RECT = new Rectangle(20, 600, 200, 40);
     Font HIGH_SCORE_FONT = new Font("arial", Font.BOLD, 20);
 

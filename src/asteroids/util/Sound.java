@@ -1,10 +1,12 @@
 package asteroids.util;
 
 import asteroids.Info;
+
 import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.sound.sampled.LineUnavailableException;
+import java.io.BufferedInputStream;
 import java.io.IOException;
 
 public class Sound implements Info {
@@ -34,8 +36,9 @@ public class Sound implements Info {
 
     private void resetAudioStream() {
         try {
+            BufferedInputStream myStream = new BufferedInputStream(getClass().getResourceAsStream(fileName));
             clip = AudioSystem.getClip();
-            clip.open(AudioSystem.getAudioInputStream(getClass().getResourceAsStream(fileName)));
+            clip.open(AudioSystem.getAudioInputStream(myStream));
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             e.printStackTrace();
         }
