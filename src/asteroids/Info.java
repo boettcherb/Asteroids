@@ -5,6 +5,9 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Rectangle;
 
+/**
+ * Info is an interface which contains all the constants and literals of this project.
+ */
 public interface Info {
     // general
     String GAME_TITLE = "ASTEROIDS";
