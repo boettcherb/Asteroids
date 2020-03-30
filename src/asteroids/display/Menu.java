@@ -33,7 +33,6 @@ public class Menu implements Info {
         quit = new Button(QUIT_BUTTON_TEXT, QUIT_BUTTON_HEIGHT);
         back = new Button(BACK_BUTTON_TEXT, BACK_BUTTON_HEIGHT);
         prefs = Preferences.userRoot().node(this.getClass().getName());
-        prefs.putInt("HIGH_SCORE", 0);
     }
 
     public void click(Point point) {
