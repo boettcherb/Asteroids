@@ -1,7 +1,7 @@
 # Asteroids
 The classic Atari Asteroids game written in Java (Swing / AWT)
 
-## Author
+## Developer
 - Brandon Boettcher
 
 ## Run
