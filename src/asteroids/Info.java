@@ -12,7 +12,7 @@ public interface Info {
     // general
     String GAME_TITLE = "ASTEROIDS";
     String FRAME_TITLE = "Asteroids v3";
-    int MAX_FPS = 60;
+    int TARGET_FPS = 60;
     int CANVAS_WIDTH = 1000;
     int CANVAS_HEIGHT = 700;
     int TIME_BETWEEN_LEVELS = 100;
