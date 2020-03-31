@@ -3,6 +3,7 @@ by Atari in 1979. The object of the game is to stay alive as long
 as possible while avoiding asteroids and UFOs. The player starts
 with three lives and receives an extra life every 10,000 points.
 -------------------------------------------------------------------------------------------------
+Developer: Brandon Boettcher
 Original Game Designers: Lyle Rains, Ed Logg, Dominic Walsh
 -------------------------------------------------------------------------------------------------
 Controls:

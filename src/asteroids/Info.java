@@ -49,7 +49,7 @@ public interface Info {
     float BACK_BUTTON_HEIGHT = 0.74f;
     String BACK_BUTTON_TEXT = "BACK";
     int HELP_TEXT_X = 30, HELP_TEXT_Y = 50;
-    int LINE_SPACE = 30;
+    int LINE_SPACE = 29;
     String HELP_TEXT_FILE = "HelpText.txt";
     Font HELP_TEXT_FONT = new Font("arial", Font.PLAIN, 25);
 
