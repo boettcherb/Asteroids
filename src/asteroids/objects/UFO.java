@@ -42,9 +42,10 @@ public class UFO extends Shape implements Info {
         }
         if (--shootTimer <= 0) {
             float theta;
-            if (handler.getPlayer() != null) {
-                float diffX = handler.getPlayer().getX() - getX();
-                float diffY = handler.getPlayer().getY() - getY();
+            Player player = handler.getPlayer();
+            if (player != null) {
+                float diffX = player.getX() - getX();
+                float diffY = player.getY() - getY();
                 if (diffX == 0) {
                     diffX = EPSILON;
                 }
