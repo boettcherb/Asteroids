@@ -91,6 +91,7 @@ public interface Info {
     float MIN_LINE_LENGTH = 5;
 
     // asteroids
+    int STARTING_ASTEROIDS = 3;
     float LARGE_ASTEROID_SPEED = 1.8f;
     float MAX_MEDIUM_ASTEROID_SPEED = 3f;
     float MAX_SMALL_ASTEROID_SPEED = 5f;
@@ -159,8 +160,8 @@ public interface Info {
     String BEAT1_SOUND_FILE = "beat1.wav";
     String BEAT2_SOUND_FILE = "beat2.wav";
     int TIME_BETWEEN_BEATS = 70;
-    int MIN_TIME_BETWEEN_BEATS = 25;
-    int INC_TIME = 90;
+    int MIN_TIME_BETWEEN_BEATS = 20;
+    int INC_TIME = 60;
     String LARGE_UFO_SOUND_FILE = "saucerBig.wav";
     String SMALL_UFO_SOUND_FILE = "saucerSmall.wav";
     String LARGE_EXPLOSION_SOUND_FILE = "bangLarge.wav";
