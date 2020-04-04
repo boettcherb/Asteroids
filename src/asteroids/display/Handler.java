@@ -42,6 +42,7 @@ public class Handler implements Info {
      * game for the handler and hud by spawning a new player and starting the first level.
      */
     public void newGame() {
+        clearAll();
         resetPlayer();
         hud.newGame();
         newLevel();
