@@ -13,7 +13,6 @@ public class HighScoreList implements Info {
     public HighScoreList() {
         prefs = Preferences.userRoot().node(this.getClass().getName());
         getNames();
-        newScore = 0;
     }
 
     private void getNames() {
@@ -30,18 +29,20 @@ public class HighScoreList implements Info {
             height += HS_LIST_LINE_SPACING;
             int score = prefs.getInt(names[i], 0);
             if (score > 0) {
-                g.drawString(names[i] + getSpaces(names[i].length()) + prefs.getInt(names[i], 0), HS_LIST_X, height);
+                String name = names[i];
+                if (Character.isDigit(name.charAt(name.length() - 1))) {
+                    name = name.substring(0, name.length() - 1);
+                }
+                int curScore = prefs.getInt(names[i], 0);
+                g.drawString(name + getSpaces(name, curScore) + curScore, HS_LIST_X, height);
             } else {
                 break;
             }
         }
     }
 
-    private String getSpaces(int nameLength) {
-        if (nameLength >= 20) {
-            throw new IllegalArgumentException("HighScoreList: getSpaces(): name too long");
-        }
-        return " ".repeat(20 - nameLength);
+    private String getSpaces(String name, int score) {
+        return ".".repeat(HS_LIST_SPACES - name.length() - Integer.toString(score).length());
     }
 
     public boolean newPossibleHighScore(int score) {
@@ -52,7 +53,8 @@ public class HighScoreList implements Info {
         return false;
     }
 
-    public void addNewScore(String name) {
+    public void addNewScore(String newName) {
+        String name = getValidName(newName);
         int newIndex = 0;
         while (newIndex < NUM_HIGH_SCORES && prefs.getInt(names[newIndex], 0) >= newScore) {
             ++newIndex;
@@ -66,5 +68,31 @@ public class HighScoreList implements Info {
         }
         getNames();
         newScore = 0;
+    }
+
+    private String getValidName(String newName) {
+        StringBuilder sb = new StringBuilder(newName);
+        if (invalidName(newName)) {
+            sb.append('1');
+            while (invalidName(sb.toString())) {
+                char num = sb.charAt(sb.length() - 1);
+                sb.deleteCharAt(sb.length() - 1);
+                sb.append(num + 1);
+            }
+        }
+        return sb.toString();
+    }
+
+    private boolean invalidName(String name) {
+        for (String str : names) {
+            if (name.equals(str)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public int getNewScore() {
+        return newScore;
     }
 }
