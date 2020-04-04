@@ -2,17 +2,20 @@ package asteroids.user_input;
 
 import asteroids.display.GUI;
 import asteroids.display.Handler;
+import asteroids.display.Menu;
 import asteroids.objects.Player;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class KeyInput implements KeyListener {
     private GUI gui;
+    private Menu menu;
     private Handler handler;
     boolean spacePressed;
 
-    public KeyInput(GUI gui, Handler handler) {
+    public KeyInput(GUI gui, Menu menu, Handler handler) {
         this.gui = gui;
+        this.menu = menu;
         this.handler = handler;
     }
 
@@ -20,7 +23,7 @@ public class KeyInput implements KeyListener {
         int key = keyEvent.getKeyCode();
         if (key == KeyEvent.VK_ESCAPE) {
             if (gui.isPlaying()) {
-                gui.setPlaying(false);
+                menu.endGame(0);
             } else {
                 gui.stop();
             }

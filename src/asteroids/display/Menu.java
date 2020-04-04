@@ -113,10 +113,7 @@ public class Menu implements Info {
 //        if (highScoreList.newPossibleHighScore(finalScore)) {
 //            menuState = MenuState.Add_High_Score;
 //        }
-    }
-
-    public void setMenuState(MenuState state) {
-        menuState = state;
+        menuState = MenuState.Start;
     }
 
     private static class Particle {

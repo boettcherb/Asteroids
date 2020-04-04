@@ -30,7 +30,7 @@ public class GUI extends Canvas implements Info {
         new Frame(this);
         // add user input as event listeners
         addMouseListener(new MouseInput(menu));
-        addKeyListener(new KeyInput(this, handler));
+        addKeyListener(new KeyInput(this, menu, handler));
         // Load sound now so that it is not loaded while the user is playing
         // See the Sound class for a better explanation
         Sound.initialize();
@@ -146,8 +146,6 @@ public class GUI extends Canvas implements Info {
     public void setPlaying(boolean play) {
         if (play) {
             handler.newGame();
-        } else {
-            menu.setMenuState(Menu.MenuState.Start);
         }
         playing = play;
     }
