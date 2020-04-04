@@ -12,6 +12,7 @@ public class KeyInput implements KeyListener {
     private Menu menu;
     private Handler handler;
     boolean spacePressed;
+    private Name name;
 
     public KeyInput(GUI gui, Menu menu, Handler handler) {
         this.gui = gui;
@@ -43,6 +44,18 @@ public class KeyInput implements KeyListener {
                 handler.addShape(player.shoot());
                 spacePressed = true;
             }
+        }
+        if (menu.readingName()) {
+            if (name == null) {
+                name = menu.getName();
+            }
+            if (key == KeyEvent.VK_BACK_SPACE) {
+                name.backspace();
+            } else {
+                name.addLetter(keyEvent.getKeyChar());
+            }
+        } else {
+            name = null;
         }
     }
 

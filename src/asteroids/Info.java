@@ -11,7 +11,7 @@ import java.awt.Rectangle;
 public interface Info {
     // general
     String GAME_TITLE = "ASTEROIDS";
-    String FRAME_TITLE = "Asteroids v3";
+    String FRAME_TITLE = "Asteroids v4";
     int TARGET_FPS = 60;
     int CANVAS_WIDTH = 1000;
     int CANVAS_HEIGHT = 700;
@@ -26,6 +26,11 @@ public interface Info {
     int HS_LIST_X = 20;
     int HS_LIST_Y = 30;
     int HS_LIST_LINE_SPACING = 30;
+
+    // high score names
+    String INITIAL_NAME = "Type your name";
+    int MAX_NAME_CHARACTERS = 10;
+    char[] VALID_SYMBOLS = {'-', '_', ' ', '.', ',', '\'', '\"'};
 
     // game colors
     Color BACKGROUND_COLOR = Color.BLACK;
@@ -48,8 +53,8 @@ public interface Info {
     int[] QUIT_BUTTON = {CANVAS_WIDTH / 2 - 150, 520, 300, 100};
     String BACK_BUTTON_TEXT = "BACK";
     int[] BACK_BUTTON = {CANVAS_WIDTH / 2 - 150, 520, 300, 100};
-    String ADD_BUTTON_TEXT = "Add High Score";
-    int[] ADD_BUTTON = {CANVAS_WIDTH / 2 - 150, 520, 300, 100};
+    String ADD_BUTTON_TEXT = "ADD HIGH SCORE";
+    int[] ADD_BUTTON = {CANVAS_WIDTH / 2 - 280, 400, 560, 100};
     String HS_LIST_BUTTON_TEXT = "View High Scores";
     int[] HS_LIST_BUTTON = {30, 575, 250, 50};
 

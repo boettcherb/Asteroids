@@ -4,8 +4,9 @@ import asteroids.Info;
 import asteroids.util.Button;
 import asteroids.util.HighScoreList;
 import asteroids.util.InputReader;
-import java.awt.Graphics;
-import java.awt.Point;
+import asteroids.user_input.Name;
+
+import java.awt.*;
 import java.util.Random;
 
 public class Menu implements Info {
@@ -14,6 +15,7 @@ public class Menu implements Info {
     private final Particle[] particles;
     private final Button play, help, quit, back, add, hsList;
     private HighScoreList highScoreList;
+    private Name name;
 
     public enum MenuState {
         Start,
@@ -57,6 +59,14 @@ public class Menu implements Info {
                 menuState = MenuState.Start;
             }
         }
+        if (menuState == MenuState.Add_High_Score) {
+            if (add.getRectangle().contains(point)) {
+                if (!name.getName().equals(INITIAL_NAME)) {
+                    highScoreList.addNewScore(name.getName());
+                    menuState = MenuState.High_Score_List;
+                }
+            }
+        }
     }
 
     public void tick() {
@@ -80,7 +90,7 @@ public class Menu implements Info {
         } else if (menuState == MenuState.High_Score_List) {
             renderHighScoreList(g);
         } else if (menuState == MenuState.Add_High_Score) {
-
+            renderAddHighScore(g);
         }
     }
 
@@ -108,12 +118,30 @@ public class Menu implements Info {
         back.draw(g);
     }
 
+    private void renderAddHighScore(Graphics g) {
+        Rectangle nameRect = new Rectangle(CANVAS_WIDTH / 2 - 300, 100, 600, 100);
+        g.drawRect(nameRect.x, nameRect.y, nameRect.width, nameRect.height);
+        Button.drawCenteredString(g, name.getName(), nameRect, new Font(Font.MONOSPACED, Font.PLAIN, 60));
+        add.draw(g);
+        back.draw(g);
+    }
+
     public void endGame(int finalScore) {
         gui.setPlaying(false);
-//        if (highScoreList.newPossibleHighScore(finalScore)) {
-//            menuState = MenuState.Add_High_Score;
-//        }
-        menuState = MenuState.Start;
+        if (highScoreList.newPossibleHighScore(finalScore)) {
+            name = new Name();
+            menuState = MenuState.Add_High_Score;
+        } else {
+            menuState = MenuState.Start;
+        }
+    }
+
+    public boolean readingName() {
+        return menuState == MenuState.Add_High_Score;
+    }
+
+    public Name getName() {
+        return name;
     }
 
     private static class Particle {
