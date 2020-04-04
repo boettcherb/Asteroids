@@ -6,7 +6,8 @@ import asteroids.util.HighScoreList;
 import asteroids.util.InputReader;
 import asteroids.user_input.Name;
 
-import java.awt.*;
+import java.awt.Graphics;
+import java.awt.Point;
 import java.util.Random;
 
 public class Menu implements Info {
@@ -32,12 +33,12 @@ public class Menu implements Info {
         for (int i = 0; i < particles.length; ++i) {
             particles[i] = new Particle();
         }
-        play = new Button(PLAY_BUTTON, PLAY_BUTTON_TEXT, BUTTON_FONT);
-        help = new Button(HELP_BUTTON, HELP_BUTTON_TEXT, BUTTON_FONT);
-        quit = new Button(QUIT_BUTTON, QUIT_BUTTON_TEXT, BUTTON_FONT);
-        back = new Button(BACK_BUTTON, BACK_BUTTON_TEXT, BUTTON_FONT);
-        add = new Button(ADD_BUTTON, ADD_BUTTON_TEXT, BUTTON_FONT);
-        hsList = new Button(HS_LIST_BUTTON, HS_LIST_BUTTON_TEXT, HS_BUTTON_FONT);
+        play = new Button(PLAY_BUTTON, "PLAY", BUTTON_FONT);
+        help = new Button(HELP_BUTTON, "HELP", BUTTON_FONT);
+        quit = new Button(QUIT_BUTTON, "QUIT", BUTTON_FONT);
+        back = new Button(BACK_BUTTON, "BACK", BUTTON_FONT);
+        add = new Button(ADD_BUTTON, "ADD SCORE", BUTTON_FONT);
+        hsList = new Button(HS_LIST_BUTTON, "View High Scores", HS_BUTTON_FONT);
         highScoreList = new HighScoreList();
     }
 
@@ -119,9 +120,9 @@ public class Menu implements Info {
     }
 
     private void renderAddHighScore(Graphics g) {
-        Rectangle nameRect = new Rectangle(CANVAS_WIDTH / 2 - 300, 100, 600, 100);
-        g.drawRect(nameRect.x, nameRect.y, nameRect.width, nameRect.height);
-        Button.drawCenteredString(g, name.getName(), nameRect, new Font(Font.MONOSPACED, Font.PLAIN, 60));
+        Button.drawCenteredString(g, "Your Score: " + highScoreList.getNewScore(), HS_RECT, HS_FONT);
+        g.drawRect(NAME_RECT.x, NAME_RECT.y, NAME_RECT.width, NAME_RECT.height);
+        Button.drawCenteredString(g, name.getName(), NAME_RECT, NAME_FONT);
         add.draw(g);
         back.draw(g);
     }
