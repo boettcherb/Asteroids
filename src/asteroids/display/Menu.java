@@ -2,8 +2,8 @@ package asteroids.display;
 
 import asteroids.Info;
 import asteroids.util.Button;
+import asteroids.util.HighScoreList;
 import asteroids.util.InputReader;
-import java.util.prefs.Preferences;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.util.Random;
@@ -12,13 +12,15 @@ public class Menu implements Info {
     private GUI gui;
     private MenuState menuState;
     private final Particle[] particles;
-    private final Button play, help, quit, back;
-    private Preferences prefs;
+    private final Button play, help, quit, back, add, hsList;
+    private HighScoreList highScoreList;
 
-    private enum MenuState {
+    public enum MenuState {
         Start,
         Help,
-        None
+        High_Score_List,
+        Add_High_Score,
+        None // game in play
     }
 
     public Menu(GUI gui) {
@@ -28,11 +30,13 @@ public class Menu implements Info {
         for (int i = 0; i < particles.length; ++i) {
             particles[i] = new Particle();
         }
-        play = new Button(PLAY_BUTTON_TEXT, PLAY_BUTTON_HEIGHT);
-        help = new Button(HELP_BUTTON_TEXT, HELP_BUTTON_HEIGHT);
-        quit = new Button(QUIT_BUTTON_TEXT, QUIT_BUTTON_HEIGHT);
-        back = new Button(BACK_BUTTON_TEXT, BACK_BUTTON_HEIGHT);
-        prefs = Preferences.userRoot().node(this.getClass().getName());
+        play = new Button(PLAY_BUTTON, PLAY_BUTTON_TEXT, BUTTON_FONT);
+        help = new Button(HELP_BUTTON, HELP_BUTTON_TEXT, BUTTON_FONT);
+        quit = new Button(QUIT_BUTTON, QUIT_BUTTON_TEXT, BUTTON_FONT);
+        back = new Button(BACK_BUTTON, BACK_BUTTON_TEXT, BUTTON_FONT);
+        add = new Button(ADD_BUTTON, ADD_BUTTON_TEXT, BUTTON_FONT);
+        hsList = new Button(HS_LIST_BUTTON, HS_LIST_BUTTON_TEXT, HS_BUTTON_FONT);
+        highScoreList = new HighScoreList();
     }
 
     public void click(Point point) {
@@ -44,8 +48,11 @@ public class Menu implements Info {
                 menuState = MenuState.Help;
             } else if (quit.getRectangle().contains(point)) {
                 gui.stop();
+            } else if (hsList.getRectangle().contains(point)) {
+                menuState = MenuState.High_Score_List;
             }
-        } else if (menuState == MenuState.Help) {
+        } else if (menuState == MenuState.Help || menuState == MenuState.High_Score_List
+            || menuState == MenuState.Add_High_Score) {
             if (back.getRectangle().contains(point)) {
                 menuState = MenuState.Start;
             }
@@ -59,25 +66,30 @@ public class Menu implements Info {
     }
 
     public void render(Graphics g) {
+        // render the menu particles
         g.setColor(MENU_PARTICLE_COLOR);
         for (Particle p : particles) {
             p.draw(g);
         }
+        // render foreground based on the menu state
         g.setColor(FOREGROUND_COlOR);
         if (menuState == MenuState.Start) {
             renderStart(g);
-        } else {
+        } else if (menuState == MenuState.Help) {
             renderHelp(g);
+        } else if (menuState == MenuState.High_Score_List) {
+            renderHighScoreList(g);
+        } else if (menuState == MenuState.Add_High_Score) {
+
         }
     }
 
     private void renderStart(Graphics g) {
         Button.drawCenteredString(g, GAME_TITLE, TITLE_RECT, TITLE_FONT);
-        Button.drawCenteredString(g, "High Score: " + getCurrentHighScore(), HIGH_SCORE_RECT, HIGH_SCORE_FONT);
         play.draw(g);
         help.draw(g);
         quit.draw(g);
-
+        hsList.draw(g);
     }
 
     private void renderHelp(Graphics g) {
@@ -91,19 +103,20 @@ public class Menu implements Info {
         back.draw(g);
     }
 
+    private void renderHighScoreList(Graphics g) {
+        highScoreList.render(g);
+        back.draw(g);
+    }
+
     public void endGame(int finalScore) {
-        if (finalScore > getCurrentHighScore()) {
-            prefs.putInt(HIGH_SCORE, finalScore);
-        }
         gui.setPlaying(false);
+//        if (highScoreList.newPossibleHighScore(finalScore)) {
+//            menuState = MenuState.Add_High_Score;
+//        }
     }
 
-    private int getCurrentHighScore() {
-        return prefs.getInt(HIGH_SCORE, 0);
-    }
-
-    public void setStartMenu() {
-        menuState = MenuState.Start;
+    public void setMenuState(MenuState state) {
+        menuState = state;
     }
 
     private static class Particle {

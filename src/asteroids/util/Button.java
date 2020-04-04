@@ -8,24 +8,31 @@ import java.awt.Rectangle;
 
 public class Button implements Info {
     private final String buttonText;
-    private final int X, Y;
+    private final int X, Y, width, height;
+    private Font font;
 
-    public Button(String text, float percentHeight) {
+    public Button(int[] buttonAttributes, String text, Font font) {
+        if (buttonAttributes == null || buttonAttributes.length != 4) {
+            throw new IllegalArgumentException("Button: Button(): buttonAttributes must be an array of 4 ints");
+        }
         buttonText = text;
-        Y = (int) (percentHeight * CANVAS_HEIGHT);
-        X = (CANVAS_WIDTH / 2) - (BUTTON_WIDTH / 2);
+        X = buttonAttributes[0];
+        Y = buttonAttributes[1];
+        width = buttonAttributes[2];
+        height = buttonAttributes[3];
+        this.font = font;
     }
 
     public void draw(Graphics g) {
         g.setColor(BACKGROUND_COLOR);
-        g.fillRect(X, Y, BUTTON_WIDTH, BUTTON_HEIGHT);
+        g.fillRect(X, Y, width, height);
         g.setColor(FOREGROUND_COlOR);
-        g.drawRect(X, Y, BUTTON_WIDTH, BUTTON_HEIGHT);
-        drawCenteredString(g, buttonText, getRectangle(), BUTTON_FONT);
+        g.drawRect(X, Y, width, height);
+        drawCenteredString(g, buttonText, getRectangle(), font);
     }
 
     public Rectangle getRectangle() {
-        return new Rectangle(X, Y, BUTTON_WIDTH, BUTTON_HEIGHT);
+        return new Rectangle(X, Y, width, height);
     }
 
     public static void drawCenteredString(Graphics g, String text, Rectangle rect, Font font) {

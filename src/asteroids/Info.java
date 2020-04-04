@@ -19,10 +19,13 @@ public interface Info {
     int EXTRA_LIFE_SCORE = 10000;
     float EPSILON = 1e-6f;
 
-    // high score
-    String HIGH_SCORE = "HIGH_SCORE";
-    Rectangle HIGH_SCORE_RECT = new Rectangle(20, 600, 200, 40);
-    Font HIGH_SCORE_FONT = new Font("arial", Font.BOLD, 20);
+    // high scores
+    int NUM_HIGH_SCORES = 10;
+    String[] HIGH_SCORE_KEYS = {"hs1", "hs2", "hs3", "hs4", "hs5", "hs6", "hs7", "hs8", "hs9", "hs10"};
+    Font HS_LIST_FONT = new Font("arial", Font.PLAIN, 20);
+    int HS_LIST_X = 20;
+    int HS_LIST_Y = 30;
+    int HS_LIST_LINE_SPACING = 30;
 
     // game colors
     Color BACKGROUND_COLOR = Color.BLACK;
@@ -36,18 +39,21 @@ public interface Info {
 
     // menu buttons
     Font BUTTON_FONT = new Font("arial", Font.PLAIN, 60);
-    int BUTTON_WIDTH = 300;
-    int BUTTON_HEIGHT = 100;
-    float PLAY_BUTTON_HEIGHT = 0.40f;
-    float HELP_BUTTON_HEIGHT = 0.57f;
-    float QUIT_BUTTON_HEIGHT = 0.74f;
+    Font HS_BUTTON_FONT = new Font("arial", Font.PLAIN, 20);
     String PLAY_BUTTON_TEXT = "PLAY";
+    int[] PLAY_BUTTON = {CANVAS_WIDTH / 2 - 150, 280, 300, 100};
     String HELP_BUTTON_TEXT = "HELP";
+    int[] HELP_BUTTON = {CANVAS_WIDTH / 2 - 150, 400, 300, 100};
     String QUIT_BUTTON_TEXT = "QUIT";
+    int[] QUIT_BUTTON = {CANVAS_WIDTH / 2 - 150, 520, 300, 100};
+    String BACK_BUTTON_TEXT = "BACK";
+    int[] BACK_BUTTON = {CANVAS_WIDTH / 2 - 150, 520, 300, 100};
+    String ADD_BUTTON_TEXT = "Add High Score";
+    int[] ADD_BUTTON = {CANVAS_WIDTH / 2 - 150, 520, 300, 100};
+    String HS_LIST_BUTTON_TEXT = "View High Scores";
+    int[] HS_LIST_BUTTON = {30, 575, 250, 50};
 
     // help screen
-    float BACK_BUTTON_HEIGHT = 0.74f;
-    String BACK_BUTTON_TEXT = "BACK";
     int HELP_TEXT_X = 30, HELP_TEXT_Y = 50;
     int LINE_SPACE = 29;
     String HELP_TEXT_FILE = "HelpText.txt";

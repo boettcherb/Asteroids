@@ -145,11 +145,9 @@ public class GUI extends Canvas implements Info {
      */
     public void setPlaying(boolean play) {
         if (play) {
-            // if a new game is starting, tell the handler
             handler.newGame();
         } else {
-            // if the user's game ends, reset the menus back to the start menu
-            menu.setStartMenu();
+            menu.setMenuState(Menu.MenuState.Start);
         }
         playing = play;
     }
