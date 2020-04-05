@@ -1,4 +1,4 @@
-package asteroids.util;
+package asteroids.input;
 
 import java.io.BufferedReader;
 import java.io.InputStream;

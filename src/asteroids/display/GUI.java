@@ -1,7 +1,7 @@
 package asteroids.display;
 
 import asteroids.Info;
-import asteroids.user_input.*;
+import asteroids.input.*;
 import asteroids.util.Sound;
 import java.awt.Canvas;
 import java.awt.Graphics;

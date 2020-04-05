@@ -3,8 +3,8 @@ package asteroids.display;
 import asteroids.Info;
 import asteroids.util.Button;
 import asteroids.util.HighScoreList;
-import asteroids.util.InputReader;
-import asteroids.user_input.Name;
+import asteroids.input.InputReader;
+import asteroids.input.Name;
 
 import java.awt.Graphics;
 import java.awt.Point;

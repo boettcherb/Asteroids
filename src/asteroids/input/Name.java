@@ -1,4 +1,4 @@
-package asteroids.user_input;
+package asteroids.input;
 
 import asteroids.Info;
 
