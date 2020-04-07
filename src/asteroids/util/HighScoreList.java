@@ -77,15 +77,15 @@ public class HighScoreList implements Info {
             while (invalidName(sb.toString())) {
                 char num = sb.charAt(sb.length() - 1);
                 sb.deleteCharAt(sb.length() - 1);
-                sb.append(num + 1);
+                sb.append((char) (num + 1));
             }
         }
         return sb.toString();
     }
 
-    private boolean invalidName(String name) {
-        for (String str : names) {
-            if (name.equals(str)) {
+    private boolean invalidName(String newName) {
+        for (String name : names) {
+            if (name.equals(newName)) {
                 return true;
             }
         }
