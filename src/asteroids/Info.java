@@ -168,7 +168,7 @@ public interface Info {
     String BEAT1_SOUND_FILE = "beat1.wav";
     String BEAT2_SOUND_FILE = "beat2.wav";
     int TIME_BETWEEN_BEATS = 70;
-    int MIN_TIME_BETWEEN_BEATS = 20;
+    int MIN_TIME_BETWEEN_BEATS = 30;
     int INC_TIME = 60;
     String LARGE_UFO_SOUND_FILE = "saucerBig.wav";
     String SMALL_UFO_SOUND_FILE = "saucerSmall.wav";
