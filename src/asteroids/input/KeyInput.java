@@ -8,9 +8,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class KeyInput implements KeyListener {
-    private GUI gui;
-    private Menu menu;
-    private Handler handler;
+    private final GUI gui;
+    private final Menu menu;
+    private final Handler handler;
     boolean spacePressed;
     private Name name;
 
@@ -20,8 +20,15 @@ public class KeyInput implements KeyListener {
         this.handler = handler;
     }
 
+    /**
+     * The keyPressed method is defined in the KeyListener interface
+     * and is called whenever a key is pushed down.
+     * @param keyEvent contains information about the key down event
+     */
     public void keyPressed(KeyEvent keyEvent) {
         int key = keyEvent.getKeyCode();
+        // if ESC is pressed, either exit the game (to the menus) or
+        // quit the program.
         if (key == KeyEvent.VK_ESCAPE) {
             if (gui.isPlaying()) {
                 menu.endGame(0);
@@ -29,6 +36,7 @@ public class KeyInput implements KeyListener {
                 gui.stop();
             }
         }
+        // read in input for controlling the player (arrow keys and space)
         Player player = handler.getPlayer();
         if (gui.isPlaying() && player != null) {
             if (key == KeyEvent.VK_UP) {
@@ -45,6 +53,8 @@ public class KeyInput implements KeyListener {
                 spacePressed = true;
             }
         }
+        // if the user is typing their name to be recorded on the high score
+        // list, the letters typed will be added to the name here
         if (menu.readingName()) {
             if (name == null) {
                 name = menu.getName();
@@ -59,6 +69,11 @@ public class KeyInput implements KeyListener {
         }
     }
 
+    /**
+     * The keyReleased method is called whenever the user lifts their finger
+     * off of a key.
+     * @param keyEvent contains information about the key released event
+     */
     public void keyReleased(KeyEvent keyEvent) {
         int key = keyEvent.getKeyCode();
         Player player = handler.getPlayer();
@@ -78,5 +93,6 @@ public class KeyInput implements KeyListener {
         }
     }
 
+    // unused methods from the KeyListener interface
     public void keyTyped(KeyEvent keyEvent) {}
 }
