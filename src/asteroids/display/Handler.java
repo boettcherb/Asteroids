@@ -16,13 +16,13 @@ import java.util.Random;
  */
 public class Handler implements Info {
     private LinkedList<Shape> shapes, added, removed;
-    private Menu menu;
-    private HUD hud;
+    private final Menu menu;
+    private final HUD hud;
     private Player player;
     private PlayerExplosion playerExplosion;
-    private Random rand;
+    private final Random rand;
     private int playerDeathTimer, playerSaveTimer, newLevelTimer, musicTimer;
-    private Sound beat1, beat2;
+    private final Sound beat1, beat2;
     private int ticks, asteroidsRemaining;
     private boolean firstBeat, ufoInGame;
 

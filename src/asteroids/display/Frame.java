@@ -9,7 +9,7 @@ import java.awt.Dimension;
  * user interface as a component of the frame.
  */
 public class Frame implements Info {
-    private JFrame frame;
+    private final JFrame frame;
 
     /**
      * Constructor: Creates and configures the frame for this instance of the game

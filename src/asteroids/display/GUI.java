@@ -15,10 +15,10 @@ import java.awt.image.BufferStrategy;
 public class GUI extends Canvas implements Info {
     private boolean running; // true if the program is running
     private boolean playing; // true if the game is in play (not in the menus)
-    private Thread gameThread;
-    private Handler handler;
-    private Menu menu;
-    private HUD hud;
+    private final Thread gameThread;
+    private final Handler handler;
+    private final Menu menu;
+    private final HUD hud;
 
     public GUI() {
         gameThread = new Thread(this::gameLoop);

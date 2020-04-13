@@ -12,7 +12,7 @@ public class HUD implements Info {
     private int numLives;
     private int score;
     private int level;
-    private Player playerImage;
+    private final Player playerImage;
 
     public HUD() {
         playerImage = new Player(LIVES_X, LIVES_Y);
