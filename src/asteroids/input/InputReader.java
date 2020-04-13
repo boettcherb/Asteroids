@@ -4,45 +4,40 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.IOException;
-import java.util.StringTokenizer;
 
+/**
+ * The InputReader class combines all of the functionality of reading in
+ * input from a file into one class. In this project, the InputReader is
+ * used to read in the text that is displayed on the help screen, which
+ * is contained in the HelpText.txt file.
+ */
 public class InputReader {
-    private BufferedReader br;
-    private StringTokenizer st;
+    private final BufferedReader br;
 
     public InputReader(String fileName) {
         InputStream in = this.getClass().getResourceAsStream(fileName);
         br = new BufferedReader(new InputStreamReader(in));
     }
 
+    /**
+     * This method determines if there is more text to be read from
+     * the buffered reader.
+     * @return true if there is more to read, false otherwise
+     */
     public boolean hasNext() {
         try {
-            return (st != null && st.hasMoreTokens()) || br.ready();
+            return br.ready();
         } catch (IOException e) {
             e.printStackTrace();
         }
         return false;
     }
 
-    public String next() {
-        if (!hasNext()) {
-            throw new RuntimeException("Nothing more to read from this file");
-        }
-        if (st == null || !st.hasMoreTokens()) {
-            try {
-                st = new StringTokenizer(br.readLine());
-            }
-            catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return st.nextToken();
-    }
-
-    public int nextInt() {
-        return Integer.parseInt(next());
-    }
-
+    /**
+     * Read in the next line from the buffered reader. Only read the next
+     * line if hasNext() is true.
+     * @return the next line as a string, or null if !hasNext()
+     */
     public String nextLine() {
         if (hasNext()) {
             try {
