@@ -4,9 +4,14 @@ import asteroids.Info;
 import asteroids.util.Sound;
 import java.util.Random;
 
+/**
+ * An asteroid is a shape consisting of an array of points (which are defined
+ * in the Info class. Each asteroid has a type (large, medium, or small) which
+ * defines its size, velocity, and explosion sound.
+ */
 public class Asteroid extends Shape implements Info {
-    private AsteroidType type;
-    private Sound explosion;
+    private final AsteroidType type;
+    private final Sound explosion;
 
     public enum AsteroidType {
         Large,
@@ -37,17 +42,30 @@ public class Asteroid extends Shape implements Info {
         setVelY((float) -Math.sin(theta) * speed);
     }
 
+    /**
+     * The tick method is called by the Handler every frame for every asteroid.
+     * Each tick, the asteroid only changes its position by its velocity.
+     */
     public void tick() {
         translate(getVelX(), getVelY());
     }
 
-    public AsteroidType getType() {
-        return type;
-    }
-
+    /**
+     * This method is called by the Handler before an asteroid is destroyed.
+     * When an asteroid is destroyed, an explosion sound is played. However,
+     * when the game ends, the asteroids are also "destroyed" but we do not
+     * want to play the explosion sound.
+     * @param play true if we want to play the sound, false otherwise
+     */
     public void destruct(boolean play) {
         if (play) {
             explosion.playSound(false);
         }
+    }
+
+    // Getter methods
+
+    public AsteroidType getType() {
+        return type;
     }
 }
