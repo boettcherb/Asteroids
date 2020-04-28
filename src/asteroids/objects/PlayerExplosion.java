@@ -6,9 +6,14 @@ import asteroids.util.Point;
 import java.awt.*;
 import java.util.Random;
 
+/**
+ * A PlayerExplosion is the four lines that appear when the player spaceship is destroyed. Each
+ * line consists of 2 random points around where the player died, and a random velocity. The
+ * PlayerExplosion is removed when the player spawns again.
+ */
 public class PlayerExplosion implements Info {
-    private Line[] lines;
-    private float[][] speeds;
+    private final Line[] lines;
+    private final float[][] speeds;
 
     public PlayerExplosion(float X, float Y) {
         Random rand = new Random();
@@ -31,6 +36,11 @@ public class PlayerExplosion implements Info {
         }
     }
 
+    /**
+     * The tick method is called every frame by the Handler. Every frame, the new
+     * positions of the points are calculated from the old positions and the velocity,
+     * and a new line is created with those new points.
+     */
     public void tick() {
         for (int i = 0; i < NUM_LINES; ++i) {
             Point p1 = lines[i].getP1();
@@ -41,6 +51,12 @@ public class PlayerExplosion implements Info {
         }
     }
 
+    /**
+     * The render method is called by the render method in the handler when it
+     * is time to draw to the canvas. Each time the render method is called, the
+     * lines that make up the explosion are drawn with drawLine().
+     * @param g The graphics object from the canvas.
+     */
     public void render(Graphics g) {
         for (int i = 0; i < NUM_LINES; ++i) {
             Point p1 = lines[i].getP1();
