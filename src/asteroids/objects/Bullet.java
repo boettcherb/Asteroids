@@ -5,10 +5,9 @@ import asteroids.util.Point;
 import asteroids.util.Line;
 
 /**
- * A Bullet is a shape consisting of an array of points (defined in the Info
- * class. Each bullet has a type (either a player bullet or a UFO bullet)
- * that is set in the constructor and used by the Handler to determine
- * collisions.
+ * A Bullet is a shape consisting of an array of points (defined in the Info class) Each
+ * bullet has a type (either a player bullet or a UFO bullet) that is set in the
+ * constructor and used by the Handler to determine collisions.
  */
 public class Bullet extends Shape implements Info {
     private final BulletType type;
