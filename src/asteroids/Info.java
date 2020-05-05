@@ -11,7 +11,7 @@ import java.awt.Rectangle;
 public interface Info {
     // general
     String GAME_TITLE = "ASTEROIDS";
-    String FRAME_TITLE = "Asteroids v4";
+    String FRAME_TITLE = "Asteroids v5";
     int TARGET_FPS = 60;
     int CANVAS_WIDTH = 1000;
     int CANVAS_HEIGHT = 700;
