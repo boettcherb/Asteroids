@@ -35,5 +35,5 @@ The classic Atari Asteroids game written in Java (Swing / AWT).
     - This package contains all the .wav sound files (bangLarge, bangMedium, bangSmall, beat1, beat2, fire, saucerBig, saucerSmall, thrust). These sound files were obtained from [this website](http://www.classicgaming.cc/classics/asteroids/sounds).
     
 ## Run
-- Download the latest version (currently ['Asteroids v4'](https://github.com/boettcherb/Asteroids/raw/master/JARs/Asteroids_v4.jar))
-- Double click on the downloaded JAR or go to the directory that you downloaded it to and run the terminal command `java -jar Asteroids_v4.jar`
+- Download the latest version (currently ['Asteroids v5'](https://github.com/boettcherb/Asteroids/raw/master/JARs/Asteroids_v5.jar))
+- Double click on the downloaded JAR or go to the directory that you downloaded it to and run the terminal command `java -jar Asteroids_v5.jar`
